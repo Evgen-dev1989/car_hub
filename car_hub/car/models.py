@@ -22,7 +22,7 @@ class Car(models.Model):
     name = models.CharField(max_length=50)
     brand = models.CharField(max_length=50)
     model = models.CharField(max_length=50)
-    year = models.PositiveIntegerField(default=2000)
+    year = models.PositiveIntegerField(default=2000, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name="cars")
