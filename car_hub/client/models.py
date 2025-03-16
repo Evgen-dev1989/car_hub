@@ -1,6 +1,5 @@
 from django.db import models
-from car.models import Car
-from car.models import Category
+
 
 
 
@@ -19,7 +18,7 @@ class Client(models.Model):
     notes = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    car = models.ForeignKey(Car, on_delete=models.CASCADE, null=True)
+ 
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
