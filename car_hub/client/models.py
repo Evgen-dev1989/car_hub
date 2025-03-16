@@ -1,5 +1,8 @@
 from django.db import models
 from car.models import Car
+from car.models import Category
+
+
 
 class Client(models.Model):
     first_name = models.CharField(max_length=20)
