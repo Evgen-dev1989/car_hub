@@ -20,7 +20,6 @@ class Car(models.Model):
     id = models.AutoField(primary_key=True)
     color = models.CharField(max_length=50)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name="cars")
-    name = models.CharField(max_length=50)
     brand = models.CharField(max_length=50)
     model = models.CharField(max_length=50)
     year = models.PositiveIntegerField(default=2000, null=True, blank=True)
