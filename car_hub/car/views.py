@@ -1,5 +1,11 @@
+import os
+import sys
+
 from django.shortcuts import render
-from car_hub.services import  get_categories
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from services import get_categories
+
 
 def cars_page(request):
     categories = get_categories() 
