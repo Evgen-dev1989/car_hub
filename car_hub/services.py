@@ -23,22 +23,15 @@ from car.models import Category
 # eurotruck = Category.objects.create(name="eurotruck", parent=cargo_car)
 
 def get_subcategories_passenger():
-    categories = Category.objects.filter(parent__isnull=True)  
-    result = {}
-
-    for category in categories:
-        subcategories = category.subcategories.all() 
-        result[category.name] = [sub.name for sub in subcategories]  
-        
-    return result['passenger car']
+    passenger_car = Category.objects.filter(name="passenger car").first()  
+    if passenger_car:
+        return passenger_car.subcategories.all() 
+    return []
 
 def get_subcategories_cargo():
-    categories = Category.objects.filter(parent__isnull=True)  
-    result = {}
+    cargo_car = Category.objects.filter(name="cargo car").first()  
+    if cargo_car:
+        return cargo_car.subcategories.all() 
+    return []
 
-    for category in categories:
-        subcategories = category.subcategories.all() 
-        result[category.name] = [sub.name for sub in subcategories]  
-        
-    return result['cargo car']
 

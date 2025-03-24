@@ -39,16 +39,18 @@
         <br/>
         {%for j in categories%}
         
-        <button class="btn btn-primary" onclick="location.href=''">{{j}}</button>
-        {% endfor %}
+        <h1>{{ category.name }}</h1>
+        {% if category.subcategories.all %}
+    <h3>Subcategories:</h3>
     
-
-
-
-        <p><a href=""></a>.</p>
-        
-        <button class="btn btn-primary" onclick="location.href=''">Passenger car</button>
-        <button class="btn btn-success" onclick="location.href=''">Сargo car</button>
+    <ul>
+        {% for sub in category.subcategories.all %}
+            <li><a href="{% url 'category_detail' sub.id %}">{{ sub.name }}</a></li>
+        {% endfor %}
+    </ul>
+        {% else %}
+    <p>No subcategories available.</p>
+        {% endif %}
     </main>
     
     <footer class="container-fluid text-center mt-5">

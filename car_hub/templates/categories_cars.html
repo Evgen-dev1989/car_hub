@@ -46,8 +46,10 @@
                 <h3>Cargo cars</h3>
             </button>
             <ul class="dropdown-menu">
-                {% for i in cargo_cars %}   
-                {{i}}
+                {% for i in passenger_cars %}
+                <li>
+                    <a class="dropdown-item" href="{% url 'category_detail' i.id %}">{{ i.name }}</a>
+                </li>
                 {% endfor %}
             </ul>
 
@@ -56,8 +58,10 @@
                     <h3>Passenger cars</h3>
                 </button>
                 <ul class="dropdown-menu">
-                    {% for i in passenger_cars %}   
-                    {{i}}
+                    {% for i in passenger_cars %}
+                    <li>
+                        <a class="dropdown-item" href="{% url 'category_detail' i.id %}">{{ i.name }}</a>
+                    </li>
                     {% endfor %}
                 </ul>
           </div>
