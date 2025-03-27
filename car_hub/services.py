@@ -4,7 +4,21 @@ import sys
 sys.stdout.reconfigure(encoding='utf-8')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'car_hub.settings')
 django.setup()
-from car.models import Category
+from car.models import Category, Car
+
+
+def get_subcategories_passenger():
+    passenger_car = Category.objects.filter(name="passenger car").first()  
+    if passenger_car:
+        return passenger_car.subcategories.all() 
+    return []
+
+def get_subcategories_cargo():
+    cargo_car = Category.objects.filter(name="cargo car").first()  
+    if cargo_car:
+        return cargo_car.subcategories.all() 
+    return []
+
 
 # passenger_car = Category.objects.create(name = 'passenger car')
 # cargo_car = Category.objects.create(name = 'cargo car')
@@ -22,16 +36,48 @@ from car.models import Category
 # dump_trucks_tractors = Category.objects.create(name="dump trucks tractors", parent=cargo_car)
 # eurotruck = Category.objects.create(name="eurotruck", parent=cargo_car)
 
-def get_subcategories_passenger():
-    passenger_car = Category.objects.filter(name="passenger car").first()  
-    if passenger_car:
-        return passenger_car.subcategories.all() 
-    return []
 
-def get_subcategories_cargo():
-    cargo_car = Category.objects.filter(name="cargo car").first()  
-    if cargo_car:
-        return cargo_car.subcategories.all() 
-    return []
+# Car.objects.create(color="Red", brand="Toyota", model="Camry", year=2022, price=30000.00, category=sedan)
+# Car.objects.create(color="Blue", brand="Honda", model="Accord", year=2021, price=28000.00, category=sedan)
+# Car.objects.create(color="Black", brand="Hyundai", model="Sonata", year=2023, price=29000.00, category=sedan)
+
+# Car.objects.create(color="White", brand="Volkswagen", model="Passat", year=2020, price=32000.00, category=universal)
+# Car.objects.create(color="Gray", brand="Subaru", model="Outback", year=2021, price=35000.00, category=universal)
+# Car.objects.create(color="Silver", brand="Audi", model="A4 Avant", year=2022, price=40000.00, category=universal)
+
+# Car.objects.create(color="Yellow", brand="Ford", model="Focus", year=2019, price=22000.00, category=hatchback)
+# Car.objects.create(color="Green", brand="Kia", model="Ceed", year=2021, price=23000.00, category=hatchback)
+# Car.objects.create(color="Red", brand="Mazda", model="3", year=2022, price=25000.00, category=hatchback)
+
+# Car.objects.create(color="Black", brand="Skoda", model="Octavia", year=2021, price=27000.00, category=liftback)
+# Car.objects.create(color="White", brand="Tesla", model="Model S", year=2023, price=80000.00, category=liftback)
+# Car.objects.create(color="Blue", brand="BMW", model="4 Series", year=2022, price=50000.00, category=liftback)
+
+# Car.objects.create(color="Red", brand="Chevrolet", model="Camaro", year=2020, price=45000.00, category=coupe)
+# Car.objects.create(color="Black", brand="Ford", model="Mustang", year=2021, price=55000.00, category=coupe)
+# Car.objects.create(color="White", brand="Nissan", model="370Z", year=2022, price=43000.00, category=coupe)
+
+# Car.objects.create(color="Blue", brand="Porsche", model="911", year=2023, price=120000.00, category=cabriolet)
+# Car.objects.create(color="Yellow", brand="Mercedes-Benz", model="E-Class", year=2022, price=70000.00, category=cabriolet)
+# Car.objects.create(color="Red", brand="BMW", model="Z4", year=2021, price=65000.00, category=cabriolet)
 
 
+# Car.objects.create(color="Black", brand="Ford", model="F-150", year=2020, price=40000.00, category=pickup)
+# Car.objects.create(color="White", brand="Chevrolet", model="Silverado", year=2021, price=42000.00, category=pickup)
+# Car.objects.create(color="Blue", brand="Toyota", model="Hilux", year=2022, price=38000.00, category=pickup)
+
+# Car.objects.create(color="Gray", brand="MAN", model="TGS", year=2019, price=90000.00, category=onboard)
+# Car.objects.create(color="White", brand="Volvo", model="FH", year=2021, price=95000.00, category=onboard)
+# Car.objects.create(color="Black", brand="Scania", model="R-Series", year=2022, price=100000.00, category=onboard)
+
+# Car.objects.create(color="Yellow", brand="Caterpillar", model="793F", year=2018, price=1500000.00, category=dump_trucks_with_tipping_body)
+# Car.objects.create(color="Orange", brand="Komatsu", model="HD785", year=2020, price=1400000.00, category=dump_trucks_with_tipping_body)
+# Car.objects.create(color="Gray", brand="BelAZ", model="75710", year=2021, price=3000000.00, category=dump_trucks_with_tipping_body)
+
+# Car.objects.create(color="Black", brand="Kenworth", model="W990", year=2019, price=130000.00, category=dump_trucks_tractors)
+# Car.objects.create(color="White", brand="Peterbilt", model="389", year=2021, price=140000.00, category=dump_trucks_tractors)
+# Car.objects.create(color="Blue", brand="Freightliner", model="Cascadia", year=2022, price=145000.00, category=dump_trucks_tractors)
+
+# Car.objects.create(color="Gray", brand="DAF", model="XF", year=2020, price=120000.00, category=eurotruck)
+# Car.objects.create(color="Black", brand="Renault", model="T High", year=2021, price=125000.00, category=eurotruck)
+# Car.objects.create(color="White", brand="Mercedes-Benz", model="Actros", year=2022, price=130000.00, category=eurotruck)
