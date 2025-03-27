@@ -1,10 +1,72 @@
 import os
-import django
 import sys
+
+import django
+
 sys.stdout.reconfigure(encoding='utf-8')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'car_hub.settings')
 django.setup()
-from car.models import Category, Car
+from decimal import Decimal
+
+from car.models import Car, Category
+from django.conf import settings
+
+
+class Cart:
+    def __init__(self, request):
+
+        self.session = request.session
+        cart = self.session.get(settings.CART_SESSION_ID)
+        if not cart:
+            cart = self.session[settings.CART_SESSION_ID] = {}  
+        self.cart = cart
+
+    def add(self, car, quantity=1, update_quantity=False):
+
+        car_id = str(car.id)
+        if car_id not in self.cart:
+            self.cart[car_id] = {'quantity': 0, 'price': str(car.price)}
+        if update_quantity:
+            self.cart[car_id]['quantity'] = quantity
+        else:
+            self.cart[car_id]['quantity'] += quantity
+        self.save()
+
+    def remove(self, car):
+
+        car_id = str(car.id)
+        if car_id in self.cart:
+            del self.cart[car_id]
+            self.save()
+
+    def save(self):
+
+        self.session.modified = True
+
+    def __iter__(self):
+
+        car_ids = self.cart.keys()
+        cars = Car.objects.filter(id__in=car_ids)
+        for car in cars:
+            self.cart[str(car.id)]['car'] = car
+
+        for item in self.cart.values():
+            item['price'] = Decimal(item['price'])
+            item['total_price'] = item['price'] * item['quantity']
+            yield item
+
+    def __len__(self):
+
+        return sum(item['quantity'] for item in self.cart.values())
+
+    def get_total_price(self):
+
+        return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
+
+    def clear(self):
+  
+        del self.session[settings.CART_SESSION_ID]
+        self.save()
 
 
 def get_subcategories_passenger():
