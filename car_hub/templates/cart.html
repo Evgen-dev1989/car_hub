@@ -52,6 +52,7 @@
                     {% endfor %}
                 </ul>
                 <p>total cost: {{ cart.get_total_price }} ₽</p>
+                <a href="{% url 'cart_clear' %}">Clear cart</a>
             {% else %}
                 <p>Cart is empty.</p>
             {% endif %}
