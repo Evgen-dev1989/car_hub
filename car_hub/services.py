@@ -75,12 +75,13 @@ def get_subcategories_passenger():
         return passenger_car.subcategories.all() 
     return []
 
+passenger_cars = get_subcategories_passenger()
+
 def get_subcategories_cargo():
     cargo_car = Category.objects.filter(name="cargo car").first()  
     if cargo_car:
         return cargo_car.subcategories.all() 
     return []
-
 
 # passenger_car = Category.objects.create(name = 'passenger car')
 # cargo_car = Category.objects.create(name = 'cargo car')

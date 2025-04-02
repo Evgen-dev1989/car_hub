@@ -10,11 +10,7 @@ class Category(models.Model):
     )
 
     def __str__(self):
-
-        if self.parent:
-            return f"{self.parent.name}"
-        else: 
-            return f"{self.name}"
+        return self.name
 
 class Car(models.Model):
 
@@ -25,8 +21,17 @@ class Car(models.Model):
     model = models.CharField(max_length=50)
     year = models.PositiveIntegerField(default=2000, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, null=True, blank=True, related_name="cars")  
-    reviews = models.CharField(max_length=100, null=True, blank=True)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, null=True, blank=True, related_name="cars")
+
     def __str__(self):
         return f"{self.brand} {self.model} ({self.year})"
+
+class Review(models.Model):
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name="reviews")
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="reviews")
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Review by {self.client.name} on {self.car.brand} {self.car.model}"
 

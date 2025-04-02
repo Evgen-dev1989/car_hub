@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from services import get_subcategories_cargo, get_subcategories_passenger, Cart
 
-from .models import Category, Car
+from .models import Category, Car, Review
 
 
 def cars_categories_page(request):
@@ -50,3 +50,20 @@ def cart_clear(request):
     cart = Cart(request)
     cart.clear()
     return redirect('cart_detail')
+
+def reviews_add(request, car_id):
+    car = get_object_or_404(Car, id=car_id)
+
+    if request.method == "POST":
+        text = request.POST.get("text")  # Получаем текст из формы
+        client = request.user.client  # Если у тебя есть связь user -> client
+        if text and client:
+            Review.objects.create(car=car, client=client, text=text)
+
+    return redirect('car_detail', car_id=car.id)
+
+# def review_view(request):
+
+#     cart = Cart(request)
+#     return render(request, 'cart.html', {'cart': cart})
+

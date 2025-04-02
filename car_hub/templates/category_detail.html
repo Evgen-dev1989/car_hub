@@ -27,7 +27,7 @@
     <header class="container-fluid text-center">
         <h2>Car Hub</h2>
         <nav>
-            <a href="#" class="me-3">Home</a>
+            <a href="{% url 'car' %}" class="me-3">Home</a>
             <a href="#" class="me-3">About us</a>
             <a href="#">Сontacts</a>
         </nav>
@@ -59,16 +59,12 @@
                         </ul>
                         <div class="card-body">
                             
-                            <form>
-                                <div class="mb-3">
-                                  <label for="exampleInputEmail1" class="form-label">reviews</label>
-                                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                  <div id="emailHelp" class="form-text">Write your review if you are already familiar with this model.</div>
-                                </div>
                             
-                                <li>{{ car.reviews }} <a class="btn btn-success" href="{% url 'cart_add' car.id %}" role="button">send</a></li>
-                              </form>
-                        
+                                <form action="{% url 'reviews_add' car.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <textarea name="text" placeholder="Write your review if you are already familiar with this model"></textarea>
+                                    <button type="submit" class="btn btn-success">Send</button>
+                                </form>
                         </div>
                       </div>
                       <br/>
