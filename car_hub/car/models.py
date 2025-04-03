@@ -35,3 +35,6 @@ class Review(models.Model):
     def __str__(self):
         return f"Review by {self.client.name} on {self.car.brand} {self.car.model}"
 
+class Cart_Model(models.Model):
+    client = models.OneToOneField(Client, on_delete=models.CASCADE, related_name="cart")
+    data = models.JSONField(default=dict)

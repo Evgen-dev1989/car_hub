@@ -55,8 +55,9 @@ def reviews_add(request, car_id):
     car = get_object_or_404(Car, id=car_id)
 
     if request.method == "POST":
-        text = request.POST.get("text")  # Получаем текст из формы
-        client = request.user.client  # Если у тебя есть связь user -> client
+        text = request.POST.get("text")
+        client = request.user.client 
+        
         if text and client:
             Review.objects.create(car=car, client=client, text=text)
 

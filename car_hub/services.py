@@ -2,25 +2,29 @@ import os
 import sys
 
 import django
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 sys.stdout.reconfigure(encoding='utf-8')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'car_hub.settings')
 django.setup()
 from decimal import Decimal
 
-from car.models import Car, Category
+from car.models import Car, Category, Cart_Model
+from client.models import   Client
 from django.conf import settings
 
 
 class Cart:
     def __init__(self, request):
-
         self.session = request.session
+        self.client = request.user.client if request.user.is_authenticated else None
+
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
-            cart = self.session[settings.CART_SESSION_ID] = {}  
+            cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
-
     def add(self, car, quantity=1, update_quantity=False):
 
         car_id = str(car.id)
@@ -40,7 +44,9 @@ class Cart:
             self.save()
 
     def save(self):
-
+        if self.client:
+            Cart_Model.objects.update_or_create(client=self.client, defaults={"data": self.cart})
+        self.session[settings.CART_SESSION_ID] = self.cart
         self.session.modified = True
 
     def __iter__(self):
@@ -82,6 +88,17 @@ def get_subcategories_cargo():
     if cargo_car:
         return cargo_car.subcategories.all() 
     return []
+
+
+
+@receiver(post_save, sender=User)
+def create_client(sender, instance, created, **kwargs):
+    if created:
+        Client.objects.create(user=instance, name=instance.username)
+
+@receiver(post_save, sender=User)
+def save_client(sender, instance, **kwargs):
+    instance.client.save()
 
 # passenger_car = Category.objects.create(name = 'passenger car')
 # cargo_car = Category.objects.create(name = 'cargo car')
