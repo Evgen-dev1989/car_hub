@@ -7,6 +7,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from services import get_subcategories_cargo, get_subcategories_passenger, Cart
 
 from .models import Category, Car, Review
+from client.models import Client
 
 
 def cars_categories_page(request):
@@ -20,6 +21,8 @@ def category_detail(request, category_id):
     category = get_object_or_404(Category, id=category_id) 
     cars = Car.objects.filter(category=category)
     return render(request, 'category_detail.html', {'category': category, 'cars': cars})
+ 
+
 
 def cart_add(request, car_id):
     cart = Cart(request)
@@ -63,8 +66,4 @@ def reviews_add(request, car_id):
 
     return redirect('car_detail', car_id=car.id)
 
-# def review_view(request):
-
-#     cart = Cart(request)
-#     return render(request, 'cart.html', {'cart': cart})
-
+Class

@@ -25,6 +25,12 @@ SECRET_KEY = 'django-insecure-0s)za4u!7f=0u2m#v#-t)o&++u5lst0are3z7xcy$iq_611^7f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+
 ALLOWED_HOSTS = []
 
 CART_SESSION_ID = 'cart'
@@ -39,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'client',
-    'car'
+    'car',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
