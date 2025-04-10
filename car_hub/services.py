@@ -164,3 +164,4 @@ def save_client(sender, instance, **kwargs):
 # Remove-Item db.sqlite3 -Force
 # python manage.py makemigrations car
 # python manage.py migrate
+#python manage.py runserver

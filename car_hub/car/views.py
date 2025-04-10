@@ -1,11 +1,10 @@
 import os
 import sys
-from django.urls import reverse
 from django.shortcuts import get_object_or_404, render, redirect
-
+from rest_framework.viewsets import ModelViewSet
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from services import get_subcategories_cargo, get_subcategories_passenger, Cart
-
+from api.serializers_car import CarSerializer
 from .models import Category, Car, Review
 from client.models import Client
 
@@ -66,4 +65,6 @@ def reviews_add(request, car_id):
 
     return redirect('car_detail', car_id=car.id)
 
-Class
+class Car_View(ModelViewSet):
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer
