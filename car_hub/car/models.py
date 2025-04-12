@@ -32,8 +32,8 @@ class Review(models.Model):
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"Review by {self.client.name} on {self.car.brand} {self.car.model}"
+def __str__(self):
+    return f"Review by {self.client.first_name} {self.client.last_name} on {self.car.brand} {self.car.model}"
 
 class Cart_Model(models.Model):
     client = models.OneToOneField(Client, on_delete=models.CASCADE, related_name="cart")

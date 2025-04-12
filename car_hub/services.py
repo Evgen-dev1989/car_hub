@@ -5,10 +5,6 @@ import django
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
-sys.stdout.reconfigure(encoding='utf-8')
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'car_hub.settings')
-django.setup()
 from decimal import Decimal
 
 from car.models import Car, Category, Cart_Model
@@ -89,14 +85,21 @@ def get_subcategories_cargo():
 
 
 
+
 @receiver(post_save, sender=User)
 def create_client(sender, instance, created, **kwargs):
-    if created:
-        Client.objects.create(user=instance, name=instance.username)
+    if created and not hasattr(instance, 'client'):
+        Client.objects.create(
+            user=instance,
+            first_name=instance.username,  
+            last_name="Unknown", 
+            phone=f"123456789{instance.id}", 
+            email=f"{instance.username}@example.com")
 
 @receiver(post_save, sender=User)
 def save_client(sender, instance, **kwargs):
-    instance.client.save()
+    if hasattr(instance, 'client'):
+        instance.client.save()
 
 # passenger_car = Category.objects.create(name = 'passenger car')
 # cargo_car = Category.objects.create(name = 'cargo car')
