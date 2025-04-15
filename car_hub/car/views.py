@@ -22,18 +22,30 @@ def category_detail(request, category_id):
     return render(request, 'category_detail.html', {'category': category, 'cars': cars})
  
 
-
 def cart_add(request, car_id):
-    cart = Cart(request)
     car = get_object_or_404(Car, id=car_id)
-    cart.add(car=car)
-
+    cart = Cart(request)
+    cart.add(car=car, quantity=1)
     if  car.category:
         category_id = car.category.id
     else:
         category_id = 1 
 
     return redirect('category_detail', category_id=category_id)
+
+
+
+# def cart_add(request, car_id):
+#     cart = Cart(request)
+#     car = get_object_or_404(Car, id=car_id)
+#     cart.add(car=car)
+
+#     if  car.category:
+#         category_id = car.category.id
+#     else:
+#         category_id = 1 
+
+#     return redirect('category_detail', category_id=category_id)
 
 def cart_delete(request, car_id):
   

@@ -15,17 +15,42 @@ from django.conf import settings
 class Cart:
     def __init__(self, request):
         self.session = request.session
-        self.client = request.user.client if request.user.is_authenticated else None
+        self.user = request.user if request.user.is_authenticated else None
+        self.client = None
+
+
+        if self.user:
+            try:
+                self.client = self.user.client
+            except Client.DoesNotExist:
+                self.client = Client.objects.create(
+                    user=self.user,
+                    first_name=self.user.username,
+                    last_name="Unknown",
+                    phone=f"123456789{self.user.id}",
+                    email=f"{self.user.username}@example.com"
+                )
+
 
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
             cart = self.session[settings.CART_SESSION_ID] = {}
-        self.cart = cart
-    def add(self, car, quantity=1, update_quantity=False):
 
+
+        if self.client:
+            try:
+                cart_model = self.client.cart
+                cart = cart_model.data  
+                self.session[settings.CART_SESSION_ID] = cart
+            except Cart_Model.DoesNotExist:
+                cart_model = Cart_Model.objects.create(client=self.client, data=cart)
+
+        self.cart = cart
+
+    def add(self, car, quantity=1, update_quantity=False):
         car_id = str(car.id)
         if car_id not in self.cart:
-            self.cart[car_id] = {'quantity': 0, 'price': str(car.price)}
+            self.cart[car_id] = {'quantity': 0, 'price': str(car.price)} 
         if update_quantity:
             self.cart[car_id]['quantity'] = quantity
         else:
@@ -33,42 +58,65 @@ class Cart:
         self.save()
 
     def remove(self, car):
-
         car_id = str(car.id)
         if car_id in self.cart:
             del self.cart[car_id]
             self.save()
 
     def save(self):
+
+        serialized_cart = {}
+        for car_id, item in self.cart.items():
+            serialized_cart[car_id] = {
+                'quantity': item['quantity'],
+                'price': str(item['price']) 
+            }
+
+
         if self.client:
-            Cart_Model.objects.update_or_create(client=self.client, defaults={"data": self.cart})
-        self.session[settings.CART_SESSION_ID] = self.cart
+            Cart_Model.objects.update_or_create(
+                client=self.client,
+                defaults={"data": serialized_cart}
+            )
+
+        # Сохраняем в сессии
+        self.session[settings.CART_SESSION_ID] = serialized_cart
         self.session.modified = True
+        self.cart = serialized_cart 
 
     def __iter__(self):
-
         car_ids = self.cart.keys()
         cars = Car.objects.filter(id__in=car_ids)
-        for car in cars:
-            self.cart[str(car.id)]['car'] = car
+        cart_copy = self.cart.copy()  
 
-        for item in self.cart.values():
-            item['price'] = Decimal(item['price'])
+        for car in cars:
+            cart_copy[str(car.id)]['car'] = car
+
+        for item in cart_copy.values():
+            item['price'] = Decimal(item['price'])  
             item['total_price'] = item['price'] * item['quantity']
             yield item
 
     def __len__(self):
-
         return sum(item['quantity'] for item in self.cart.values())
 
     def get_total_price(self):
-
-        return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
+        return sum(
+            Decimal(item['price']) * item['quantity']
+            for item in self.cart.values()
+        )
 
     def clear(self):
-  
         del self.session[settings.CART_SESSION_ID]
-        self.save()
+        if self.client:
+            try:
+                cart_model = self.client.cart
+                cart_model.data = {}
+                cart_model.save()
+            except Cart_Model.DoesNotExist:
+                pass
+        self.session[settings.CART_SESSION_ID] = {}
+        self.session.modified = True
 
 
 def get_subcategories_passenger():
@@ -85,21 +133,32 @@ def get_subcategories_cargo():
 
 
 
-
 @receiver(post_save, sender=User)
 def create_client(sender, instance, created, **kwargs):
-    if created and not hasattr(instance, 'client'):
+    print("create_client signal triggered")
+    if not hasattr(instance, 'client'):
+        from client.models import Client
         Client.objects.create(
             user=instance,
-            first_name=instance.username,  
-            last_name="Unknown", 
-            phone=f"123456789{instance.id}", 
-            email=f"{instance.username}@example.com")
+            first_name=instance.username,
+            last_name="Unknown",
+            phone=f"123456789{instance.id}",
+            email=f"{instance.username}@example.com"
+        )
 
 @receiver(post_save, sender=User)
 def save_client(sender, instance, **kwargs):
+    print("save_client signal triggered")
     if hasattr(instance, 'client'):
         instance.client.save()
+
+@receiver(post_save, sender=Client)
+def create_cart(sender, instance, created, **kwargs):
+    print("create_cart signal triggered")
+    if not hasattr(instance, 'cart'):
+        from client.models import Cart_Model
+        Cart_Model.objects.create(client=instance, data={})
+
 
 # passenger_car = Category.objects.create(name = 'passenger car')
 # cargo_car = Category.objects.create(name = 'cargo car')
