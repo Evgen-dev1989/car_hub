@@ -1,4 +1,4 @@
-from car.views import cars_categories_page, category_detail, cart_add, cart_view, cart_delete, cart_clear, reviews_add
+from car.views import cars_categories_page, category_detail, cart_add, cart_view, cart_delete, cart_clear, reviews_add, user_register
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter
@@ -19,6 +19,7 @@ urlpatterns = [
     path('remove/<int:car_id>/', cart_delete, name='cart_remove'),
     path('cart/', cart_view, name='cart_detail'),
     path('clear/', cart_clear, name='cart_clear'),
-    path('api-auth/', include('rest_framework.urls'))
+    path('api-auth/', include('rest_framework.urls')),
+    path('registr/', user_register, name='registr'),
 ]
 urlpatterns += router.urls

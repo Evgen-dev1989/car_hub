@@ -12,12 +12,13 @@ from client.models import   Client
 from django.conf import settings
 
 
+import copy
+
 class Cart:
     def __init__(self, request):
         self.session = request.session
         self.user = request.user if request.user.is_authenticated else None
         self.client = None
-
 
         if self.user:
             try:
@@ -31,16 +32,14 @@ class Cart:
                     email=f"{self.user.username}@example.com"
                 )
 
-
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
             cart = self.session[settings.CART_SESSION_ID] = {}
 
-
         if self.client:
             try:
                 cart_model = self.client.cart
-                cart = cart_model.data  
+                cart = cart_model.data
                 self.session[settings.CART_SESSION_ID] = cart
             except Cart_Model.DoesNotExist:
                 cart_model = Cart_Model.objects.create(client=self.client, data=cart)
@@ -50,7 +49,7 @@ class Cart:
     def add(self, car, quantity=1, update_quantity=False):
         car_id = str(car.id)
         if car_id not in self.cart:
-            self.cart[car_id] = {'quantity': 0, 'price': str(car.price)} 
+            self.cart[car_id] = {'quantity': 0, 'price': str(car.price)}
         if update_quantity:
             self.cart[car_id]['quantity'] = quantity
         else:
@@ -64,14 +63,12 @@ class Cart:
             self.save()
 
     def save(self):
-
         serialized_cart = {}
         for car_id, item in self.cart.items():
             serialized_cart[car_id] = {
                 'quantity': item['quantity'],
-                'price': str(item['price']) 
+                'price': str(item.get('price', '0'))
             }
-
 
         if self.client:
             Cart_Model.objects.update_or_create(
@@ -79,21 +76,20 @@ class Cart:
                 defaults={"data": serialized_cart}
             )
 
-        # Сохраняем в сессии
         self.session[settings.CART_SESSION_ID] = serialized_cart
         self.session.modified = True
-        self.cart = serialized_cart 
+        self.cart = serialized_cart
 
     def __iter__(self):
-        car_ids = self.cart.keys()
+        cart_copy = copy.deepcopy(self.cart)
+        car_ids = cart_copy.keys()
         cars = Car.objects.filter(id__in=car_ids)
-        cart_copy = self.cart.copy()  
 
         for car in cars:
             cart_copy[str(car.id)]['car'] = car
 
         for item in cart_copy.values():
-            item['price'] = Decimal(item['price'])  
+            item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['quantity']
             yield item
 
