@@ -11,8 +11,6 @@ class Client(models.Model):
         null=True, 
         blank=True 
     )
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
     phone = models.CharField(max_length=15, unique=True, null=True)
     email = models.EmailField(max_length=100, unique=True, null=True)
     birth_date = models.DateField(null=True, blank=True)

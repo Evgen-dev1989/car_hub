@@ -37,4 +37,5 @@ def __str__(self):
 
 class Cart_Model(models.Model):
     client = models.OneToOneField(Client, on_delete=models.CASCADE, related_name="cart")
+
     data = models.JSONField(default=dict)

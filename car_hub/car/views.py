@@ -10,6 +10,7 @@ from client.models import Client
 from django.contrib.auth.models import User
 from django.contrib import messages
 
+
 def cars_categories_page(request):
 
     cargo_cars = get_subcategories_cargo() 
@@ -22,22 +23,12 @@ def category_detail(request, category_id):
     cars = Car.objects.filter(category=category)
     return render(request, 'category_detail.html', {'category': category, 'cars': cars})
 
-
-
-
-
-from django.contrib.auth.models import User
-from django.contrib import messages
-from django.shortcuts import render, redirect
-from client.models import Client
-
 def user_register(request):
     if request.method == 'POST':
+        
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
         phone = request.POST.get('phone')
         birth_date = request.POST.get('birth_date')
         address = request.POST.get('address')
@@ -48,12 +39,13 @@ def user_register(request):
         preferred_car_brand = request.POST.get('preferred_car_brand')
         notes = request.POST.get('notes')
 
-        if username and email and password and first_name and last_name and phone:
+        if username and email and password and phone:
+            if User.objects.filter(username=username).exists():
+                messages.add_message(request, messages.WARNING, "Имя пользователя уже занято.", extra_tags="register")
+                return render(request, 'registration.html')
             user = User.objects.create_user(username=username, email=email, password=password)
             Client.objects.create(
                 user=user,
-                first_name=first_name,
-                last_name=last_name,
                 phone=phone,
                 email=email,
                 birth_date=birth_date,

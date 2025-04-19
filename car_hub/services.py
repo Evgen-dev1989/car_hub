@@ -133,11 +133,9 @@ def get_subcategories_cargo():
 def create_client(sender, instance, created, **kwargs):
     print("create_client signal triggered")
     if not hasattr(instance, 'client'):
-        from client.models import Client
+  
         Client.objects.create(
             user=instance,
-            first_name=instance.username,
-            last_name="Unknown",
             phone=f"123456789{instance.id}",
             email=f"{instance.username}@example.com"
         )
@@ -152,7 +150,7 @@ def save_client(sender, instance, **kwargs):
 def create_cart(sender, instance, created, **kwargs):
     print("create_cart signal triggered")
     if not hasattr(instance, 'cart'):
-        from client.models import Cart_Model
+
         Cart_Model.objects.create(client=instance, data={})
 
 
