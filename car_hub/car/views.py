@@ -24,19 +24,53 @@ def category_detail(request, category_id):
 
 
 
+
+
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from client.models import Client
+
 def user_register(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        if username and email and password:
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        phone = request.POST.get('phone')
+        birth_date = request.POST.get('birth_date')
+        address = request.POST.get('address')
+        city = request.POST.get('city')
+        country = request.POST.get('country', 'Netherlands')  # Значение по умолчанию
+        passport_number = request.POST.get('passport_number')
+        tax_id = request.POST.get('tax_id')
+        preferred_car_brand = request.POST.get('preferred_car_brand')
+        notes = request.POST.get('notes')
+
+        if username and email and password and first_name and last_name and phone:
             user = User.objects.create_user(username=username, email=email, password=password)
-            Client.objects.create(user=user)  
-            messages.add_message(request, messages.SUCCESS, "Account created. Login", extra_tags="register")
+            Client.objects.create(
+                user=user,
+                first_name=first_name,
+                last_name=last_name,
+                phone=phone,
+                email=email,
+                birth_date=birth_date,
+                address=address,
+                city=city,
+                country=country,
+                passport_number=passport_number,
+                tax_id=tax_id,
+                preferred_car_brand=preferred_car_brand,
+                notes=notes
+            )
+            messages.add_message(request, messages.SUCCESS, "Аккаунт создан. Войдите в систему.", extra_tags="register")
             return redirect('login-register')
         else:
-            messages.add_message(request, messages.WARNING, "Please fill in all fields.", extra_tags="register")
+            messages.add_message(request, messages.WARNING, "Пожалуйста, заполните все обязательные поля.", extra_tags="register")
     return render(request, 'registration.html')
+
 
 def cart_add(request, car_id):
     car = get_object_or_404(Car, id=car_id)

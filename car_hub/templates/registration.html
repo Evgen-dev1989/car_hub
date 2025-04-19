@@ -27,66 +27,75 @@
     <header class="container-fluid text-center">
         <h2>Car Hub</h2>
         <nav>
-            <a href="#" class="me-3">Home</a>
+            <a href="{% url 'car' %}" class="me-3">Home</a>
             <a href="#">Сontacts</a>
-            <a href="#" class="me-3">Registration</a>
+            <a href="" class="me-3">Registration</a>
         </nav>
     </header>
     
     <main>
-
-        <div id="center_column" class="center_column col-xs-12 col-sm-12">
-            <h1 class="page-heading">Авторизація</h1>
-            <!---->
-            <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                    <form action="https://fastexua.com/uk/authentication" method="post" id="create-account_form" class="box">
-                        <h3 class="page-subheading">Реєстрація</h3>
-                        <div class="form_content clearfix">
-                            <p>Введіть e-mail, щоб створити акаунт</p>
-                            <div class="alert alert-danger" id="create_account_error" style="display:none"></div>
-                            <div class="form-group">
-                                <label for="email_create">E-mail адреса</label>
-                                <input type="email" class="is_required validate account_input form-control" data-validate="isEmail" id="email_create" name="email_create" value="">
-                            </div>
-                            <div class="submit">
-                                <input type="hidden" class="hidden" name="back" value="my-account">						<button class="btn btn-default button button-medium exclusive" type="submit" id="SubmitCreate" name="SubmitCreate">
-                                    <span>
-                                        <i class="icon-user left"></i>
-                                        Реєстрація
-                                    </span>
-                                </button>
-                                <input type="hidden" class="hidden" name="SubmitCreate" value="Реєстрація">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-xs-12 col-sm-6">
-                    <form action="https://fastexua.com/uk/authentication" method="post" id="login_form" class="box">
-                        <h3 class="page-subheading">Вже зареєстровані?</h3>
-                        <div class="form_content clearfix">
-                            <div class="form-group form-ok">
-                                <label for="email">E-mail адреса</label>
-                                <input class="is_required validate account_input form-control" data-validate="isEmail" type="email" id="email" name="email" value="">
-                            </div>
-                            <div class="form-group form-ok">
-                                <label for="passwd">Пароль</label>
-                                <input class="is_required validate account_input form-control" type="password" data-validate="isPasswd" id="passwd" name="passwd" value="">
-                            </div>
-                            <p class="lost_password form-group"><a href="https://fastexua.com/uk/password-recovery" title="Відновити втрачений пароль" rel="nofollow">Забули пароль?</a></p>
-                            <p class="submit">
-                                <input type="hidden" class="hidden" name="back" value="my-account">						<button type="submit" id="SubmitLogin" name="SubmitLogin" class="button btn btn-default button-medium">
-                                    <span>
-                                        <i class="icon-lock left"></i>
-                                        Увійти
-                                    </span>
-                                </button>
-                            </p>
-                        </div>
-                    </form>
-                </div>
+        <form method="post" action="{% url 'registr' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Имя пользователя</label>
+                <input type="text" id="username" name="username" class="form-control" required>
             </div>
-                                </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="first_name">Имя</label>
+                <input type="text" id="first_name" name="first_name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="last_name">Фамилия</label>
+                <input type="text" id="last_name" name="last_name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Телефон</label>
+                <input type="text" id="phone" name="phone" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="birth_date">Дата рождения</label>
+                <input type="date" id="birth_date" name="birth_date" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="address">Адрес</label>
+                <textarea id="address" name="address" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="city">Город</label>
+                <input type="text" id="city" name="city" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="country">Страна</label>
+                <input type="text" id="country" name="country" class="form-control" value="Netherlands">
+            </div>
+            <div class="form-group">
+                <label for="passport_number">Номер паспорта</label>
+                <input type="text" id="passport_number" name="passport_number" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="tax_id">Налоговый номер</label>
+                <input type="text" id="tax_id" name="tax_id" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="preferred_car_brand">Предпочитаемая марка автомобиля</label>
+                <input type="text" id="preferred_car_brand" name="preferred_car_brand" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="notes">Заметки</label>
+                <textarea id="notes" name="notes" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+        </form>
+
+     
     </main>
 
     </br>
