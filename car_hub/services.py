@@ -1,18 +1,71 @@
+import copy
 import os
 import sys
+from decimal import Decimal
 
 import django
+from car.models import Car, Cart_Model, Category
+from client.models import Client
+from django import forms
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from decimal import Decimal
+from client.models import Client
+from django.contrib import messages
+from django.shortcuts import get_object_or_404, render, redirect
 
-from car.models import Car, Category, Cart_Model
-from client.models import   Client
-from django.conf import settings
+class ClientForm(forms.ModelForm):
+    class Meta:
+        model = Client
+        fields = ['user_name', 'phone', 'email', 'birth_date', 'address', 'city', 'country']
+        widgets = {
+            'birth_date': forms.DateInput(attrs={'type': 'date'}),
+            'address': forms.Textarea(attrs={'rows': 3}),
+        }
 
 
-import copy
+
+
+# def user_register(request):
+#     if request.method == 'POST':
+        
+#         username = request.POST.get('username')
+#         email = request.POST.get('email')
+#         password = request.POST.get('password')
+#         phone = request.POST.get('phone')
+#         birth_date = request.POST.get('birth_date')
+#         address = request.POST.get('address')
+#         city = request.POST.get('city')
+#         country = request.POST.get('country', 'Netherlands')  
+#         passport_number = request.POST.get('passport_number')
+#         tax_id = request.POST.get('tax_id')
+#         preferred_car_brand = request.POST.get('preferred_car_brand')
+#         notes = request.POST.get('notes')
+
+#         if username and email and password and phone:
+#             if User.objects.filter(username=username).exists():
+#                 messages.add_message(request, messages.WARNING, "Имя пользователя уже занято.", extra_tags="register")
+#                 return render(request, 'registration.html')
+#             user = User.objects.create_user(username=username, email=email, password=password)
+#             Client.objects.create(
+#                 user=user,
+#                 phone=phone,
+#                 email=email,
+#                 birth_date=birth_date,
+#                 address=address,
+#                 city=city,
+#                 country=country,
+#                 passport_number=passport_number,
+#                 tax_id=tax_id,
+#                 preferred_car_brand=preferred_car_brand,
+#                 notes=notes
+#             )
+#             messages.add_message(request, messages.SUCCESS, "Аккаунт создан. Войдите в систему.", extra_tags="register")
+#             return redirect('login-register')
+#         else:
+#             messages.add_message(request, messages.WARNING, "Пожалуйста, заполните все обязательные поля.", extra_tags="register")
+#     return render(request, 'registration.html')
 
 class Cart:
     def __init__(self, request):

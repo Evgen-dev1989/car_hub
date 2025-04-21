@@ -11,6 +11,7 @@ class Client(models.Model):
         null=True, 
         blank=True 
     )
+    user_name = models.CharField(max_length=150, unique=True, null=True, blank=True)  # Добавлено поле
     phone = models.CharField(max_length=15, unique=True, null=True)
     email = models.EmailField(max_length=100, unique=True, null=True)
     birth_date = models.DateField(null=True, blank=True)
@@ -25,4 +26,4 @@ class Client(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.user_name or self.user.username}"  # Обновлено для отображения user_name

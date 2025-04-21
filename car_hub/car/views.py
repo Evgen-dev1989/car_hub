@@ -3,7 +3,7 @@ import sys
 from django.shortcuts import get_object_or_404, render, redirect
 from rest_framework.viewsets import ModelViewSet
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from services import get_subcategories_cargo, get_subcategories_passenger, Cart
+from services import get_subcategories_cargo, get_subcategories_passenger, Cart, ClientForm
 from api.serializers_car import CarSerializer
 from .models import Category, Car, Review
 from client.models import Client
@@ -25,43 +25,21 @@ def category_detail(request, category_id):
 
 def user_register(request):
     if request.method == 'POST':
-        
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        phone = request.POST.get('phone')
-        birth_date = request.POST.get('birth_date')
-        address = request.POST.get('address')
-        city = request.POST.get('city')
-        country = request.POST.get('country', 'Netherlands')  # Значение по умолчанию
-        passport_number = request.POST.get('passport_number')
-        tax_id = request.POST.get('tax_id')
-        preferred_car_brand = request.POST.get('preferred_car_brand')
-        notes = request.POST.get('notes')
+        form = ClientForm(request.POST)
+        if form.is_valid():
+            if Client.objects.filter(user=request.user).exists():
+                messages.error(request, "you are already registered.")
+                return redirect('category_detail')
+            client = form.save(commit=False)
+            client.user = request.user
+            client.save()
+            messages.success(request, "you have successfully registered")
+            return redirect('category_detail')
+    else:
+        form = ClientForm()
 
-        if username and email and password and phone:
-            if User.objects.filter(username=username).exists():
-                messages.add_message(request, messages.WARNING, "Имя пользователя уже занято.", extra_tags="register")
-                return render(request, 'registration.html')
-            user = User.objects.create_user(username=username, email=email, password=password)
-            Client.objects.create(
-                user=user,
-                phone=phone,
-                email=email,
-                birth_date=birth_date,
-                address=address,
-                city=city,
-                country=country,
-                passport_number=passport_number,
-                tax_id=tax_id,
-                preferred_car_brand=preferred_car_brand,
-                notes=notes
-            )
-            messages.add_message(request, messages.SUCCESS, "Аккаунт создан. Войдите в систему.", extra_tags="register")
-            return redirect('login-register')
-        else:
-            messages.add_message(request, messages.WARNING, "Пожалуйста, заполните все обязательные поля.", extra_tags="register")
-    return render(request, 'registration.html')
+    return render(request, 'registration.html', {'form': form})
+
 
 
 def cart_add(request, car_id):

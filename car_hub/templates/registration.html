@@ -27,72 +27,23 @@
     <header class="container-fluid text-center">
         <h2>Car Hub</h2>
         <nav>
-            <a href="{% url 'car' %}" class="me-3">Home</a>
+
+            <a class="btn btn-outline-info" href="{% url 'car' %}" role="button">Go cart</a>
+            <a class="btn btn-outline-info" href="{% url 'cart_detail' %}" role="button">Go cart</a>
     
         </nav>
     </header>
     
     <main>
+        
         <form method="post" action="{% url 'registr' %}">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="username">User name</label>
-                <input type="text" id="username" name="username" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="email">E-mail</label>
-                <input type="email" id="email" name="email" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="phone">Phone</label>
-                <input type="text" id="phone" name="phone" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="birth_date">Date of birth</label>
-                <input type="date" id="birth_date" name="birth_date" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="address">Address</Address></label>
-                <textarea id="address" name="address" class="form-control"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="city">City</label>
-                <input type="text" id="city" name="city" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="country">Country</label>
-                <input type="text" id="country" name="country" class="form-control" value="Netherlands">
-            </div>
-            <div class="form-group">
-                <label for="passport_number">Passport number</label>
-                <input type="text" id="passport_number" name="passport_number" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="tax_id">Tax number</label>
-                <input type="text" id="tax_id" name="tax_id" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="preferred_car_brand">Preferred car brand</label>
-                <input type="text" id="preferred_car_brand" name="preferred_car_brand" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="notes">Notes</label>
-                <textarea id="notes" name="notes" class="form-control"></textarea>
-            </div>
+            {{ form.as_p }}
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
 
-     
+   
     </main>
-
-    </br>
-        <a class="btn btn-outline-info" href="{% url 'cart_detail' %}" role="button">Go cart</a>
-    <br>
-    
 
     <footer class="container-fluid text-center mt-5">
         <p>&copy; 2025 All rights reserved.</p>
