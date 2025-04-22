@@ -28,12 +28,19 @@
         <h2>Car Hub</h2>
         <nav>
             <a href="{% url 'car' %}" class="me-3">Home</a>
-            <a href="#">Сontacts</a>
+            <a href="#"></a>
             <a href="{% url 'registr' %}" class="me-3">Registration</a>
         </nav>
     </header>
     
     <main>
+        {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+        {% endif %}
 
         <h1>Your Cart</h1>
         <br/>

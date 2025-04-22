@@ -13,6 +13,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #path('client/', include('client.urls')),
     path('car/', cars_categories_page, name='car'),
+    path('car/', user_register, name='car2'),
     path('car/<int:category_id>/', category_detail, name='category_detail'),
     path('car/<int:car_id>/add_review/', reviews_add, name='reviews_add'),
     path('add/<int:car_id>/', cart_add, name='cart_add'),

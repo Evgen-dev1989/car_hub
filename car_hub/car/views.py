@@ -29,12 +29,13 @@ def user_register(request):
         if form.is_valid():
             if Client.objects.filter(user=request.user).exists():
                 messages.error(request, "you are already registered.")
-                return redirect('category_detail')
+                return redirect('car2')
             client = form.save(commit=False)
             client.user = request.user
             client.save()
             messages.success(request, "you have successfully registered")
-            return redirect('category_detail')
+            return redirect('car2')
+    
     else:
         form = ClientForm()
 

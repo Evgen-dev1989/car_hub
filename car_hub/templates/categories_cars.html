@@ -37,7 +37,13 @@
 
         <h1>Select the category of cars you are interested in</h1>
         <br/>
-        
+        {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+        {% endif %}
             
         <button class="btn btn-primary" onclick="location.href=''"></button>
 

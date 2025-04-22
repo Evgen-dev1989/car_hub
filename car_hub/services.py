@@ -25,8 +25,6 @@ class ClientForm(forms.ModelForm):
         }
 
 
-
-
 # def user_register(request):
 #     if request.method == 'POST':
         

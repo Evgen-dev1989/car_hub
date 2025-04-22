@@ -28,20 +28,26 @@
         <h2>Car Hub</h2>
         <nav>
 
-            <a class="btn btn-outline-info" href="{% url 'car' %}" role="button">Go cart</a>
-            <a class="btn btn-outline-info" href="{% url 'cart_detail' %}" role="button">Go cart</a>
+            <a class="btn btn-outline-info" href="{% url 'car' %}" role="button">Home</a>
+            <a class="btn btn-outline-info" href="{% url 'cart_detail' %}" role="button">Cart</a>
     
         </nav>
     </header>
     
     <main>
+        {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+        {% endif %}
         
         <form method="post" action="{% url 'registr' %}">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
-
    
     </main>
 
