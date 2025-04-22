@@ -5,6 +5,7 @@ from rest_framework.routers import SimpleRouter
 from api.serializers_car import CarSerializer
 from car.models import Car
 from car.views import Car_View
+from client.views import delete_all_users,  all_clients
 
 router = SimpleRouter()
 router.register('api/cars', Car_View, basename='car')
@@ -22,5 +23,7 @@ urlpatterns = [
     path('clear/', cart_clear, name='cart_clear'),
     path('api-auth/', include('rest_framework.urls')),
     path('registr/', user_register, name='registr'),
+    path('delete_users/', delete_all_users, name='delete'),
+    path('clients/',  all_clients, name='all_clients'),
 ]
 urlpatterns += router.urls
