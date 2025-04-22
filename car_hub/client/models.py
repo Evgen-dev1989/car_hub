@@ -26,4 +26,4 @@ class Client(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.user_name or self.user.username}"  # Обновлено для отображения user_name
+        return f"{self.user_name or self.user.username}" 
