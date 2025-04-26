@@ -25,6 +25,20 @@ class ClientForm(forms.ModelForm):
         }
 
 
+from car.models import Review
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['text'] 
+        widgets = {
+            'text': forms.Textarea(attrs={
+                'placeholder': 'Write your review if you are already familiar with this model',
+                'rows': 3,
+                'class': 'form-control'
+            }),
+        }
+
 class Cart:
     def __init__(self, request):
         self.session = request.session

@@ -64,13 +64,34 @@
                           <a class="btn btn-success" href="{% url 'cart_add' car.id %}" role="button">Buy</a>
                         </ul>
                         <div class="card-body">
-                            
-                            
-                                <form action="{% url 'reviews_add' car.id %}" method="POST">
-                                    {% csrf_token %}
-                                    <textarea name="text" placeholder="Write your review if you are already familiar with this model"></textarea>
-                                    <button type="submit" class="btn btn-success">Send</button>
-                                </form>
+                        
+
+                            {% if reviews %}
+                                <ul>
+                                    {% for review in reviews %}
+                                        <li>
+                                            <strong>{{ review.created_at|date:"d M Y H:i" }}</strong>: {{ review.text }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p>No reviews for this car yet.</p>
+                            {% endif %}
+
+                            <form method="POST" action="{% url 'reviews_add' car.id %}">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                {% if form.errors %}
+                                    <ul class="text-danger">
+                                        {% for field, errors in form.errors.items %}
+                                            {% for error in errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                                <button type="submit" class="btn btn-success">Send</button>
+                            </form>
                         </div>
                       </div>
                       <br/>

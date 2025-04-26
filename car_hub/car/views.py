@@ -9,6 +9,7 @@ from .models import Category, Car, Review
 from client.models import Client
 from django.contrib.auth.models import User
 from django.contrib import messages
+from services import ReviewForm
 
 
 def cars_categories_page(request):
@@ -21,7 +22,8 @@ def category_detail(request, category_id):
 
     category = get_object_or_404(Category, id=category_id) 
     cars = Car.objects.filter(category=category)
-    return render(request, 'category_detail.html', {'category': category, 'cars': cars})
+    form = ReviewForm()  
+    return render(request, 'category_detail.html', {'category': category, 'cars': cars,'form': form})
 
 
 def user_register(request):
@@ -55,25 +57,6 @@ def user_register(request):
     return render(request, 'registration.html', {'form': form})
 
 
-# def user_register(request):
-#     if request.method == 'POST':
-#         form = ClientForm(request.POST)
-#         if form.is_valid():
-#             if Client.objects.filter(user=request.user).exists():
-#                 messages.error(request, "you are already registered.")
-#                 return redirect('car2')
-#             client = form.save(commit=False)
-#             client.user = request.user
-#             client.save()
-#             messages.success(request, "you have successfully registered")
-#             return redirect('car2')
-    
-#     else:
-#         form = ClientForm()
-
-#     return render(request, 'registration.html', {'form': form})
-
-
 
 def cart_add(request, car_id):
     car = get_object_or_404(Car, id=car_id)
@@ -87,17 +70,6 @@ def cart_add(request, car_id):
     return redirect('category_detail', category_id=category_id)
 
 
-# def cart_add(request, car_id):
-#     cart = Cart(request)
-#     car = get_object_or_404(Car, id=car_id)
-#     cart.add(car=car)
-
-#     if  car.category:
-#         category_id = car.category.id
-#     else:
-#         category_id = 1 
-
-#     return redirect('category_detail', category_id=category_id)
 
 def cart_delete(request, car_id):
   
@@ -120,14 +92,22 @@ def cart_clear(request):
 def reviews_add(request, car_id):
     car = get_object_or_404(Car, id=car_id)
 
-    if request.method == "POST":
-        text = request.POST.get("text")
-        client = request.user.client 
-        
-        if text and client:
-            Review.objects.create(car=car, client=client, text=text)
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.car = car  
+            review.save()
+            return render(request, 'category_detail', category_id=car.category.id)
+    else:
+        form = ReviewForm()
 
-    return redirect('car_detail', car_id=car.id)
+    return render(request, 'category_detail', {'form': form, 'car': car})
+
+def reviews_show(request, car_id):
+    car = get_object_or_404(Car, id=car_id)
+    reviews = Review.objects.filter(car=car)
+    return render(request, 'category_detail', {'car': car, 'reviews': reviews})
 
 class Car_View(ModelViewSet):
     queryset = Car.objects.all()
