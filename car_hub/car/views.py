@@ -23,23 +23,55 @@ def category_detail(request, category_id):
     cars = Car.objects.filter(category=category)
     return render(request, 'category_detail.html', {'category': category, 'cars': cars})
 
+
 def user_register(request):
     if request.method == 'POST':
         form = ClientForm(request.POST)
         if form.is_valid():
-            if Client.objects.filter(user=request.user).exists():
+
+            username = form.cleaned_data.get('email') 
+            password = form.cleaned_data.get('phone') 
+            
+            if User.objects.filter(username=username).exists():
                 messages.error(request, "you are already registered.")
                 return redirect('car2')
+
+
+            user = User.objects.create_user(username=username, password=password)
+            client, created = Client.objects.get_or_create(user=user)
+            if not created:
+                messages.error(request, "Клиент с таким пользователем уже существует.")
+                return redirect('car2')
+            
             client = form.save(commit=False)
-            client.user = request.user
+            client.user = user
             client.save()
+
             messages.success(request, "you have successfully registered")
-            return redirect('car2')
-    
+            return redirect('car') 
     else:
         form = ClientForm()
 
     return render(request, 'registration.html', {'form': form})
+
+
+# def user_register(request):
+#     if request.method == 'POST':
+#         form = ClientForm(request.POST)
+#         if form.is_valid():
+#             if Client.objects.filter(user=request.user).exists():
+#                 messages.error(request, "you are already registered.")
+#                 return redirect('car2')
+#             client = form.save(commit=False)
+#             client.user = request.user
+#             client.save()
+#             messages.success(request, "you have successfully registered")
+#             return redirect('car2')
+    
+#     else:
+#         form = ClientForm()
+
+#     return render(request, 'registration.html', {'form': form})
 
 
 

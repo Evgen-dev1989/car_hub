@@ -18,7 +18,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 class ClientForm(forms.ModelForm):
     class Meta:
         model = Client
-        fields = ['user_name', 'phone', 'email', 'birth_date', 'address', 'city', 'country']
+        fields = ['phone', 'email', 'birth_date', 'address', 'city', 'country']
         widgets = {
             'birth_date': forms.DateInput(attrs={'type': 'date'}),
             'address': forms.Textarea(attrs={'rows': 3}),
