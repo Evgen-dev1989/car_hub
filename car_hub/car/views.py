@@ -89,6 +89,7 @@ def cart_clear(request):
     cart.clear()
     return redirect('cart_detail')
 
+
 def reviews_add(request, car_id):
     car = get_object_or_404(Car, id=car_id)
 
@@ -96,13 +97,21 @@ def reviews_add(request, car_id):
         form = ReviewForm(request.POST)
         if form.is_valid():
             review = form.save(commit=False)
-            review.car = car  
+            review.car = car  # Связываем отзыв с машиной
             review.save()
-            return render(request, 'category_detail', category_id=car.category.id)
+            return redirect('category_detail', category_id=car.category.id)  # Перенаправляем на ту же категорию
     else:
         form = ReviewForm()
 
-    return render(request, 'category_detail', {'form': form, 'car': car})
+    # Получаем все отзывы для текущей машины
+    reviews = Review.objects.filter(car=car)
+
+    return render(request, 'category_detail.html', {
+        'form': form,
+        'car': car,
+        'reviews': reviews
+    })
+
 
 def reviews_show(request, car_id):
     car = get_object_or_404(Car, id=car_id)

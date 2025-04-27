@@ -24,7 +24,7 @@ urlpatterns = [
     path('registr/', user_register, name='registr'),
     path('delete_users/', delete_all_users, name='delete'),
     path('clients/',  all_clients, name='all_clients'),
-    path('car/<int:category_id>/',  reviews_add, name='reviews_add'),
+    path('car/<int:car_id>/reviews/add/', reviews_add, name='reviews_add'),
     path('car/<int:car_id>/reviews/', reviews_show, name='reviews_show'),
 ]
 urlpatterns += router.urls

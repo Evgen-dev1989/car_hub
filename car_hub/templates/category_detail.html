@@ -63,9 +63,8 @@
                           <li class="list-group-item">Color: {{ car.color }}</li>
                           <a class="btn btn-success" href="{% url 'cart_add' car.id %}" role="button">Buy</a>
                         </ul>
-                        <div class="card-body">
-                        
-
+                            <div class="card-body">
+                    
                             {% if reviews %}
                                 <ul>
                                     {% for review in reviews %}
@@ -77,6 +76,7 @@
                             {% else %}
                                 <p>No reviews for this car yet.</p>
                             {% endif %}
+                        
 
                             <form method="POST" action="{% url 'reviews_add' car.id %}">
                                 {% csrf_token %}
