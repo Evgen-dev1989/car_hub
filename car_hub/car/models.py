@@ -28,7 +28,7 @@ class Car(models.Model):
 
 class Review(models.Model):
     car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name="reviews")
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="reviews")
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="reviews", null=True, blank=True)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 

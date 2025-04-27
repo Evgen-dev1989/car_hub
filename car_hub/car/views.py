@@ -90,6 +90,8 @@ def cart_clear(request):
     return redirect('cart_detail')
 
 
+from django.contrib.auth.models import AnonymousUser
+
 def reviews_add(request, car_id):
     car = get_object_or_404(Car, id=car_id)
 
@@ -97,13 +99,24 @@ def reviews_add(request, car_id):
         form = ReviewForm(request.POST)
         if form.is_valid():
             review = form.save(commit=False)
-            review.car = car  # Связываем отзыв с машиной
+            review.car = car
+
+
+            if request.user and not isinstance(request.user, AnonymousUser):
+                try:
+                    client = Client.objects.get(user=request.user)
+                    review.client = client 
+                except Client.DoesNotExist:
+                    return redirect('registr') 
+            else:
+                return redirect('registr') 
+
             review.save()
-            return redirect('category_detail', category_id=car.category.id)  # Перенаправляем на ту же категорию
+            return redirect('category_detail', category_id=car.category.id) 
     else:
         form = ReviewForm()
 
-    # Получаем все отзывы для текущей машины
+
     reviews = Review.objects.filter(car=car)
 
     return render(request, 'category_detail.html', {
