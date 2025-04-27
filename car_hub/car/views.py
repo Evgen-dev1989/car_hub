@@ -30,27 +30,27 @@ def user_register(request):
     if request.method == 'POST':
         form = ClientForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('email') 
-            password = form.cleaned_data.get('phone') 
+            username = form.cleaned_data.get('email')  
+            password = form.cleaned_data.get('phone')  
 
-
+       
             if User.objects.filter(username=username).exists():
                 messages.error(request, "A user with this email is already registered.")
                 return redirect('car2')
 
             try:
-
+   
                 user = User.objects.create_user(username=username, password=password)
 
-   
+  
                 client = form.save(commit=False)
                 client.user = user
                 client.save()
 
-                messages.success(request, "You have registered successfully.")
-                return redirect('car')  
+                messages.success(request, "You have successfully registered.")
+                return redirect('car') 
             except Exception as e:
-                messages.error(request, f"An error occurred while registering: {e}")
+                messages.error(request, f"An error occurred while registering:{e}")
                 return redirect('car2')
     else:
         form = ClientForm()
