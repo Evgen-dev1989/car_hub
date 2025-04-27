@@ -30,27 +30,28 @@ def user_register(request):
     if request.method == 'POST':
         form = ClientForm(request.POST)
         if form.is_valid():
-
             username = form.cleaned_data.get('email') 
             password = form.cleaned_data.get('phone') 
-            
+
+
             if User.objects.filter(username=username).exists():
-                messages.error(request, "you are already registered.")
+                messages.error(request, "A user with this email is already registered.")
                 return redirect('car2')
 
+            try:
 
-            user = User.objects.create_user(username=username, password=password)
-            client, created = Client.objects.get_or_create(user=user)
-            if not created:
-                messages.error(request, "Клиент с таким пользователем уже существует.")
+                user = User.objects.create_user(username=username, password=password)
+
+   
+                client = form.save(commit=False)
+                client.user = user
+                client.save()
+
+                messages.success(request, "You have registered successfully.")
+                return redirect('car')  
+            except Exception as e:
+                messages.error(request, f"An error occurred while registering: {e}")
                 return redirect('car2')
-            
-            client = form.save(commit=False)
-            client.user = user
-            client.save()
-
-            messages.success(request, "you have successfully registered")
-            return redirect('car') 
     else:
         form = ClientForm()
 
@@ -101,19 +102,17 @@ def reviews_add(request, car_id):
             review = form.save(commit=False)
             review.car = car
 
-
-            if request.user and not isinstance(request.user, AnonymousUser):
-                try:
-                    client = Client.objects.get(user=request.user)
-                    review.client = client 
-                except Client.DoesNotExist:
-                    return redirect('registr') 
-            else:
-                return redirect('registr') 
+          
+            try:
+                client = Client.objects.get(email=request.POST.get('email'))  
+                review.client = client  
+            except Client.DoesNotExist:
+                messages.error(request, "Client not found. Please register.")
+                return redirect('registr')  
 
             review.save()
-            return redirect('category_detail', category_id=car.category.id) 
-    else:
+            messages.success(request, "Your review has been successfully added.")
+            return redirect('category_detail', category_id=car.category.id)  
         form = ReviewForm()
 
 

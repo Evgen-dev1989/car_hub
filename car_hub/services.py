@@ -14,6 +14,7 @@ from django.dispatch import receiver
 from client.models import Client
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
+from car.models import Review
 
 class ClientForm(forms.ModelForm):
     class Meta:
@@ -25,15 +26,16 @@ class ClientForm(forms.ModelForm):
         }
 
 
-from car.models import Review
 
 class ReviewForm(forms.ModelForm):
+    email = forms.EmailField(required=True, label="Ваш email")  # Добавляем поле email
+
     class Meta:
         model = Review
-        fields = ['text'] 
+        fields = ['text']  # Поле для текста отзыва
         widgets = {
             'text': forms.Textarea(attrs={
-                'placeholder': 'Write your review if you are already familiar with this model',
+                'placeholder': 'Напишите ваш отзыв',
                 'rows': 3,
                 'class': 'form-control'
             }),
