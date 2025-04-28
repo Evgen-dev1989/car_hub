@@ -33,24 +33,25 @@ def user_register(request):
             username = form.cleaned_data.get('email')  
             password = form.cleaned_data.get('phone')  
 
-       
             if User.objects.filter(username=username).exists():
-                messages.error(request, "A user with this email is already registered.")
-                return redirect('car2')
-
+                messages.error(request, "Пользователь с таким email уже зарегистрирован.")
+                return redirect('login') 
             try:
-   
-                user = User.objects.create_user(username=username, password=password)
-
   
+                user = User.objects.create_user(username=username, password=password)
+            
+
                 client = form.save(commit=False)
                 client.user = user
+                client.email = username  
                 client.save()
-
-                messages.success(request, "You have successfully registered.")
-                return redirect('car') 
+            
+                print(f"Клиент создан: {client.email}")  
+                messages.success(request, "Вы успешно зарегистрировались.")
+                return redirect('car')
             except Exception as e:
-                messages.error(request, f"An error occurred while registering:{e}")
+                print(f"Ошибка при создании клиента: {e}") 
+                messages.error(request, f"Произошла ошибка при регистрации: {e}")
                 return redirect('car2')
     else:
         form = ClientForm()
@@ -102,20 +103,27 @@ def reviews_add(request, car_id):
             review = form.save(commit=False)
             review.car = car
 
-          
+            # Получаем email из формы
+            email = request.POST.get('email')
+            if not email:
+                messages.error(request, "Email не указан. Пожалуйста, введите email.")
+                return redirect('category_detail', category_id=car.category.id)
+
+            # Пытаемся найти клиента по email
             try:
-                client = Client.objects.get(email=request.POST.get('email'))  
-                review.client = client  
+                client = Client.objects.get(email=email)
+                review.client = client  # Связываем отзыв с клиентом
             except Client.DoesNotExist:
-                messages.error(request, "Client not found. Please register.")
-                return redirect('registr')  
+                messages.error(request, f"Клиент с email {email} не найден. Пожалуйста, зарегистрируйтесь.")
+                return redirect('registr')  # Перенаправляем на регистрацию, если клиент не найден
 
             review.save()
-            messages.success(request, "Your review has been successfully added.")
-            return redirect('category_detail', category_id=car.category.id)  
+            messages.success(request, "Ваш отзыв успешно добавлен.")
+            return redirect('category_detail', category_id=car.category.id)
+    else:
         form = ReviewForm()
 
-
+    # Получаем все отзывы для текущей машины
     reviews = Review.objects.filter(car=car)
 
     return render(request, 'category_detail.html', {

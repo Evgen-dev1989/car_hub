@@ -4,17 +4,18 @@ import sys
 from decimal import Decimal
 
 import django
-from car.models import Car, Cart_Model, Category
+from car.models import Car, Cart_Model, Category, Review
 from client.models import Client
 from django import forms
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from client.models import Client
-from django.contrib import messages
-from django.shortcuts import get_object_or_404, render, redirect
-from car.models import Review
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
+
 
 class ClientForm(forms.ModelForm):
     class Meta:
@@ -28,11 +29,11 @@ class ClientForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
-    email = forms.EmailField(required=True, label="Ваш email")  # Добавляем поле email
+    email = forms.EmailField(required=True, label="Ваш email")  
 
     class Meta:
         model = Review
-        fields = ['text']  # Поле для текста отзыва
+        fields = ['text'] 
         widgets = {
             'text': forms.Textarea(attrs={
                 'placeholder': 'Напишите ваш отзыв',
@@ -142,6 +143,21 @@ class Cart:
         self.session.modified = True
 
 
+
+
+class CustomLoginView(auth_views.LoginView):
+    template_name = 'categories_cars.html' 
+    redirect_authenticated_user = True  
+    next_page = reverse_lazy('car')  
+
+    def form_valid(self, form):
+
+        user = form.get_user()
+        if not Client.objects.filter(user=user).exists():
+ 
+            return redirect('registr')
+        return super().form_valid(form)
+
 def get_subcategories_passenger():
     passenger_car = Category.objects.filter(name="passenger car").first()  
     if passenger_car:
@@ -164,7 +180,7 @@ def create_client(sender, instance, created, **kwargs):
         Client.objects.create(
             user=instance,
             phone=f"123456789{instance.id}",
-            email=f"{instance.username}@example.com"
+            email=instance.username 
         )
 
 @receiver(post_save, sender=User)

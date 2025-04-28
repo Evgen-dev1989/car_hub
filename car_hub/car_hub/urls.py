@@ -6,7 +6,7 @@ from api.serializers_car import CarSerializer
 from car.models import Car
 from car.views import Car_View
 from client.views import delete_all_users,  all_clients
-
+from services import CustomLoginView
 router = SimpleRouter()
 router.register('api/cars', Car_View, basename='car')
 
@@ -26,5 +26,18 @@ urlpatterns = [
     path('clients/',  all_clients, name='all_clients'),
     path('car/<int:car_id>/reviews/add/', reviews_add, name='reviews_add'),
     path('car/<int:car_id>/reviews/', reviews_show, name='reviews_show'),
+    path('login/', CustomLoginView.as_view(), name='login')
 ]
 urlpatterns += router.urls
+
+
+from django.contrib.auth.models import User
+
+# Найдите пользователя admin
+user = User.objects.get(username='admin')
+
+
+user.set_password(111)  # Замените 'new_password' на ваш новый пароль
+user.save()
+
+print("Пароль успешно изменен!")

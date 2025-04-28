@@ -32,7 +32,12 @@
             <a href="{% url 'registr' %}" class="me-3">Registration</a>
         </nav>
     </header>
-    
+    <h1>Login</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
     <main>
 
         <h1>Select the category of cars you are interested in</h1>
