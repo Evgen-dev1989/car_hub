@@ -31,13 +31,4 @@ urlpatterns = [
 urlpatterns += router.urls
 
 
-from django.contrib.auth.models import User
 
-# Найдите пользователя admin
-user = User.objects.get(username='admin')
-
-
-user.set_password(111)  # Замените 'new_password' на ваш новый пароль
-user.save()
-
-print("Пароль успешно изменен!")

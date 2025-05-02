@@ -74,32 +74,29 @@
                         </ul>
                             <div class="card-body">
                     
-                            {% if reviews %}
-                                <ul>
-                                    {% for review in reviews %}
-                                        <li>
-                                            <strong>{{ review.created_at|date:"d M Y H:i" }}</strong>: {{ review.text }}
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p>No reviews for this car yet.</p>
-                            {% endif %}
+                                <div class="reviews">
+                                    <h3>review:</h3>
+                                    {% if reviews %}
+                                        <ul>
+                                            {% for review in reviews %}
+                                                <li>
+                                                    <strong>{{ review.created_at|date:"d M Y H:i" }}</strong>: {{ review.text }}
+                                                    <br>
+                                                    <em>Author: {{ review.client.email }}</em>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <p>There are no reviews yet.</p>
+                                    {% endif %}
+                                </div>
                         
 
                             <form method="POST" action="{% url 'reviews_add' car.id %}">
                                 {% csrf_token %}
                                 {{ form.as_p }}
-                                {% if form.errors %}
-                                    <ul class="text-danger">
-                                        {% for field, errors in form.errors.items %}
-                                            {% for error in errors %}
-                                                <li>{{ error }}</li>
-                                            {% endfor %}
-                                        {% endfor %}
-                                    </ul>
-                                {% endif %}
-                                <button type="submit" class="btn btn-success">Send</button>
+                                <input type="email" name="email" placeholder="Введите ваш email" required>
+                                <button type="submit" class="btn btn-success">Send review</button>
                             </form>
                         </div>
                       </div>

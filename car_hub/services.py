@@ -29,7 +29,7 @@ class ClientForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
-    email = forms.EmailField(required=True, label="Ваш email")  
+    email = forms.EmailField(required=True, label="Ваш email") 
 
     class Meta:
         model = Review
