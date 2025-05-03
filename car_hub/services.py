@@ -142,10 +142,6 @@ class Cart:
         self.session[settings.CART_SESSION_ID] = {}
         self.session.modified = True
 
-
-
-
-
 class CustomLoginView(auth_views.LoginView):
     template_name = 'categories_cars.html' 
     redirect_authenticated_user = True  

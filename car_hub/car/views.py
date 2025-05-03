@@ -10,7 +10,7 @@ from client.models import Client
 from django.contrib.auth.models import User
 from django.contrib import messages
 from services import ReviewForm
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def cars_categories_page(request):
 
@@ -25,6 +25,8 @@ def category_detail(request, category_id):
     form = ReviewForm()  
     reviews = Review.objects.filter(car__category=category)
     return render(request, 'category_detail.html', {'category': category, 'cars': cars,'form': form, 'reviews': reviews})
+
+
 
 
 def user_register(request):
