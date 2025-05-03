@@ -2,7 +2,7 @@ import copy
 import os
 import sys
 from decimal import Decimal
-
+from django.db import models
 import django
 from car.models import Car, Cart_Model, Category, Review
 from client.models import Client
@@ -141,6 +141,7 @@ class Cart:
                 pass
         self.session[settings.CART_SESSION_ID] = {}
         self.session.modified = True
+
 
 
 
