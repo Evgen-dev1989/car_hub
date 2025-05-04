@@ -91,6 +91,7 @@ def cart_send_mail(request, car_id):
         try:
             client = Client.objects.get(user=request.user)
             send_mail(
+                subject='Purchase Confirmation',
                 message=f'Dear {client.user.username},\n\nYou have successfully completed the purchase of "{car.brand} {car.model}" our manager will contact you shortly.\n\nThank you for choosing us!',
                 from_email=email_host_user, 
                 recipient_list=[client.email], 
