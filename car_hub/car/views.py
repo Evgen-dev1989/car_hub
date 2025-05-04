@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from services import ReviewForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.mail import send_mail
 
 def cars_categories_page(request):
 
@@ -25,7 +26,6 @@ def category_detail(request, category_id):
     form = ReviewForm()  
     reviews = Review.objects.filter(car__category=category)
     return render(request, 'category_detail.html', {'category': category, 'cars': cars,'form': form, 'reviews': reviews})
-
 
 
 
@@ -82,6 +82,24 @@ def cart_add(request, car_id):
     return redirect('category_detail', category_id=category_id)
 
 
+def cart_send_mail(request, car_id):
+    car = get_object_or_404(Car, id=car_id)
+    cart = Cart(request)
+    cart.add(car=car, quantity=1)
+
+    if request.user.is_authenticated:
+        try:
+            client = Client.objects.get(user=request.user)
+            send_mail(
+                message=f'Dear {client.user.username},\n\nYou have successfully completed the purchase of "{car.brand} {car.model}" our manager will contact you shortly.\n\nThank you for choosing us!',
+                from_email='your_email@gmail.com',  # Укажите ваш email
+                recipient_list=[client.email],  # Email клиента
+                fail_silently=False,
+            )
+        except Client.DoesNotExist:
+            print("Клиент не найден. Email не отправлен.")
+
+    return redirect('category_detail', category_id=car.category.id)
 
 def cart_delete(request, car_id):
   

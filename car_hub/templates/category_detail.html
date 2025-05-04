@@ -37,13 +37,7 @@
     <main>
 
         <h1>Select the category of cars you are interested in</h1>
-        {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li class="{{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-        {% endif %}
+    
 
         <body>
             <h1>Cars of the category "{{ category.name }}"</h1>
@@ -70,7 +64,7 @@
 
                           <li class="list-group-item">Year of issue: {{ car.year }}</li>
                           <li class="list-group-item">Color: {{ car.color }}</li>
-                          <a class="btn btn-success" href="{% url 'cart_add' car.id %}" role="button">Buy</a>
+                          <a class="btn btn-success" href="{% url 'cart_add' car.id %}" role="button">Add cart</a>
                         </ul>
                             <div class="card-body">
                     
@@ -106,6 +100,11 @@
             {% else %}
                 <p>There are no cars in this category.</p>
             {% endif %}
+ 
+
+
+
+
 
             <a class="btn btn-outline-info" href="{% url 'cart_detail' %}" role="button">Go cart</a>
             <a class="btn btn-outline-info" href="{% url 'car' %}" role="button">Back to category list</a>

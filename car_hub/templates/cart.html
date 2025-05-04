@@ -54,6 +54,7 @@
                         <li>
                             {{ item.car.brand }} {{ item.car.model }} - {{ item.quantity }} шт.
                             ({{ item.total_price }} ₽)
+                            <a class="btn btn-success" href="{% url 'cart_send_mail' car.id %}" role="button">Buy</a>
                             <a href="{% url 'cart_remove' item.car.id %}">Delet</a>
                         </li>
                     {% endfor %}
