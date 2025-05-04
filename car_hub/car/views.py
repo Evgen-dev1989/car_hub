@@ -12,7 +12,7 @@ from django.contrib import messages
 from services import ReviewForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
-
+from config import email_host_user
 def cars_categories_page(request):
 
     cargo_cars = get_subcategories_cargo() 
@@ -92,12 +92,12 @@ def cart_send_mail(request, car_id):
             client = Client.objects.get(user=request.user)
             send_mail(
                 message=f'Dear {client.user.username},\n\nYou have successfully completed the purchase of "{car.brand} {car.model}" our manager will contact you shortly.\n\nThank you for choosing us!',
-                from_email='your_email@gmail.com',  # Укажите ваш email
-                recipient_list=[client.email],  # Email клиента
+                from_email=email_host_user, 
+                recipient_list=[client.email], 
                 fail_silently=False,
             )
         except Client.DoesNotExist:
-            print("Клиент не найден. Email не отправлен.")
+            print("Client not found. Email not sent.")
 
     return redirect('category_detail', category_id=car.category.id)
 
