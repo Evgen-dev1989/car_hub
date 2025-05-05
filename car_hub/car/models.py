@@ -1,6 +1,7 @@
 from client.models import Client
 from django.db import models
-
+from django.contrib.syndication.views import Feed
+from django.urls import reverse
 
 class Category(models.Model):
 
@@ -25,6 +26,10 @@ class Car(models.Model):
 
     def __str__(self):
         return f"{self.brand} {self.model} ({self.year})"
+    
+    def get_absolute_url(self):
+        return reverse('category_detail', args=[self.id])
+    
 
 class Review(models.Model):
     car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name="reviews")
