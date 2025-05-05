@@ -6,7 +6,7 @@ from api.serializers_car import CarSerializer
 from car.models import Car
 from car.views import Car_View
 from client.views import delete_all_users,  all_clients
-from services import CustomLoginView
+from services import CustomLoginView, LatestCarsFeed
 from django.views.generic import TemplateView
 router = SimpleRouter()
 router.register('api/cars', Car_View, basename='car')
@@ -29,7 +29,8 @@ urlpatterns = [
     path('clients/',  all_clients, name='all_clients'),
     path('car/<int:car_id>/reviews/add/', reviews_add, name='reviews_add'),
     path('car/<int:car_id>/reviews/', reviews_show, name='reviews_show'),
-    path('login/', CustomLoginView.as_view(), name='login')
+    path('login/', CustomLoginView.as_view(), name='login'),
+    path('rss/', LatestCarsFeed(), name='rss_feed')
 ]
 urlpatterns += router.urls
 

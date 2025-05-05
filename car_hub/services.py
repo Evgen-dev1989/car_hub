@@ -15,7 +15,25 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
+from django.contrib.syndication.views import Feed
+from django.urls import path
+from car.models import Car
 
+
+class LatestCarsFeed(Feed):
+    title = "Latest Cars"
+    link = "/rss/"
+    description = "Updates on the latest cars available."
+
+    def items(self):
+        return Car.objects.order_by('-id')[:5] 
+
+    def item_title(self, item):
+        return f"{item.brand} {item.model}"
+
+    def item_description(self, item):
+        return f"Year: {item.year}, Price: {item.price} ₽"
+    
 
 class ClientForm(forms.ModelForm):
     class Meta:
