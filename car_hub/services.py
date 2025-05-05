@@ -34,6 +34,11 @@ class LatestCarsFeed(Feed):
     def item_description(self, item):
         return f"Year: {item.year}, Price: {item.price} ₽"
     
+    def __call__(self, request, *args, **kwargs):
+  
+        response = super().__call__(request, *args, **kwargs)
+        response.content = b'<?xml-stylesheet type="text/xsl" href="/static/rss-stylesheet.xsl"?>\n' + response.content
+        return response
 
 class ClientForm(forms.ModelForm):
     class Meta:
