@@ -1,4 +1,4 @@
-from car.views import cars_categories_page, category_detail, cart_add, cart_view, cart_delete, cart_clear, reviews_add, user_register, cart_send_mail, reviews_show, contacts
+from car.views import cars_categories_page, category_detail, cart_add, cart_view, cart_delete, cart_clear, reviews_add, user_register, cart_send_mail, reviews_show
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter
