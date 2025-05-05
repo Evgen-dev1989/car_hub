@@ -28,8 +28,10 @@
         <h2>Car Hub</h2>
         <nav>
 
-            <a class="btn btn-outline-info" href="{% url 'car' %}" role="button">Home</a>
-            <a class="btn btn-outline-info" href="{% url 'cart_detail' %}" role="button">Cart</a>
+            <a href="{% url 'car' %}" class="me-3">Home</a>
+            <a href="{% url 'contacts' %}" class="me-3">Сontacts</a>
+            <a href="{% url 'registr' %}" class="me-3">Registration</a>
+            <a href="{% url 'cart_detail' %}">Сart</a>
     
         </nav>
     </header>

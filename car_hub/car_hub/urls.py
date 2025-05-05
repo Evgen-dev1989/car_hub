@@ -1,4 +1,4 @@
-from car.views import cars_categories_page, category_detail, cart_add, cart_view, cart_delete, cart_clear, reviews_add, user_register, cart_send_mail, reviews_show
+from car.views import cars_categories_page, category_detail, cart_add, cart_view, cart_delete, cart_clear, reviews_add, user_register, cart_send_mail, reviews_show, contacts
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter
@@ -23,6 +23,7 @@ urlpatterns = [
     path('clear/', cart_clear, name='cart_clear'),
     path('api-auth/', include('rest_framework.urls')),
     path('registr/', user_register, name='registr'),
+    path('contacts/', contacts, name='contacts'),
     path('delete_users/', delete_all_users, name='delete'),
     path('clients/',  all_clients, name='all_clients'),
     path('car/<int:car_id>/reviews/add/', reviews_add, name='reviews_add'),

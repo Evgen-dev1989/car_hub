@@ -41,42 +41,7 @@
     </form>
     <main>
 
-        <h1>Select the category of cars you are interested in</h1>
-        <br/>
-        {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li class="{{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-        {% endif %}
-            
-        <button class="btn btn-primary" onclick="location.href=''"></button>
-
-          <div class="btn-group">
-            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <h3>Cargo cars</h3>
-            </button>
-            <ul class="dropdown-menu">
-                {% for i in passenger_cars %}
-                <li>
-                    <a class="dropdown-item" href="{% url 'category_detail' i.id %}">{{ i.name }}</a>
-                </li>
-                {% endfor %}
-            </ul>
-
-            <div class="btn-group">
-                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <h3>Passenger cars</h3>
-                </button>
-                <ul class="dropdown-menu">
-                    {% for i in passenger_cars %}
-                    <li>
-                        <a class="dropdown-item" href="{% url 'category_detail' i.id %}">{{ i.name }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-          </div>
+  
 
     </main>
 

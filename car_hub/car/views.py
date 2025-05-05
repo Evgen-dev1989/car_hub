@@ -97,9 +97,10 @@ def cart_send_mail(request, car_id):
                 recipient_list=[client.email], 
                 fail_silently=False,
             )
+            print("Thank you for your purchase, we sent you an email")
         except Client.DoesNotExist:
             print("Client not found. Email not sent.")
-
+        return redirect('cart_detail', category_id=car.category.id)
     return redirect('category_detail', category_id=car.category.id)
 
 def cart_delete(request, car_id):
