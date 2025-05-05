@@ -7,6 +7,7 @@ from car.models import Car
 from car.views import Car_View
 from client.views import delete_all_users,  all_clients
 from services import CustomLoginView
+from django.views.generic import TemplateView
 router = SimpleRouter()
 router.register('api/cars', Car_View, basename='car')
 
@@ -23,7 +24,7 @@ urlpatterns = [
     path('clear/', cart_clear, name='cart_clear'),
     path('api-auth/', include('rest_framework.urls')),
     path('registr/', user_register, name='registr'),
-    path('contacts/', contacts, name='contacts'),
+    path('contacts/', TemplateView.as_view(template_name='Сontacts.html'), name='contacts'),
     path('delete_users/', delete_all_users, name='delete'),
     path('clients/',  all_clients, name='all_clients'),
     path('car/<int:car_id>/reviews/add/', reviews_add, name='reviews_add'),
