@@ -28,7 +28,10 @@ class CarSitemap(Sitemap):
     def items(self):
         return Car.objects.all().order_by('id')
     
-    
+    def __call__(self, request, *args, **kwargs):
+        response = super().__call__(request, *args, **kwargs)
+        response.content = b'<?xml-stylesheet type="text/xsl" href="/static/sitemap-stylesheet.xsl"?>\n' + response.content
+        return response
 
     
 class LatestCarsFeed(Feed):
