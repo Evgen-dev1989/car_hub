@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'client',
     'car',
+    'django.contrib.sitemaps',
     'rest_framework'
 ]
 

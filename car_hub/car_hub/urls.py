@@ -6,10 +6,18 @@ from api.serializers_car import CarSerializer
 from car.models import Car
 from car.views import Car_View
 from client.views import delete_all_users,  all_clients
-from services import CustomLoginView, LatestCarsFeed
+from services import CustomLoginView, LatestCarsFeed, CarSitemap
 from django.views.generic import TemplateView
+from django.contrib.sitemaps.views import sitemap
+
+
+
 router = SimpleRouter()
 router.register('api/cars', Car_View, basename='car')
+
+sitemaps = {
+    'cars': CarSitemap,
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,7 +38,8 @@ urlpatterns = [
     path('car/<int:car_id>/reviews/add/', reviews_add, name='reviews_add'),
     path('car/<int:car_id>/reviews/', reviews_show, name='reviews_show'),
     path('login/', CustomLoginView.as_view(), name='login'),
-    path('rss/', LatestCarsFeed(), name='rss_feed')
+    path('rss/', LatestCarsFeed(), name='rss_feed'),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 urlpatterns += router.urls
 

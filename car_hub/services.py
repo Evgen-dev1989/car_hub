@@ -18,8 +18,19 @@ from django.urls import reverse_lazy
 from django.contrib.syndication.views import Feed
 from django.urls import path
 from car.models import Car
+from django.contrib.sitemaps import Sitemap
 
 
+class CarSitemap(Sitemap):
+    changefreq = "daily"
+    priority = 0.8
+
+    def items(self):
+        return Car.objects.all().order_by('id')
+    
+    
+
+    
 class LatestCarsFeed(Feed):
     title = "Latest Cars"
     link = "/rss/"
@@ -48,8 +59,6 @@ class ClientForm(forms.ModelForm):
             'birth_date': forms.DateInput(attrs={'type': 'date'}),
             'address': forms.Textarea(attrs={'rows': 3}),
         }
-
-
 
 class ReviewForm(forms.ModelForm):
     email = forms.EmailField(required=True, label="Ваш email") 
