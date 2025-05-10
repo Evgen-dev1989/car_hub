@@ -20,6 +20,7 @@ from django.urls import path
 from car.models import Car
 from django.contrib.sitemaps import Sitemap
 
+    
 
 class CarSitemap(Sitemap):
     changefreq = "daily"
@@ -227,6 +228,11 @@ def create_cart(sender, instance, created, **kwargs):
     if not hasattr(instance, 'cart'):
 
         Cart_Model.objects.create(client=instance, data={})
+
+# cd /home/camkaenota/solr-9.8.1
+#bin/solr start --host 0.0.0.0 --port 8983
+#bin/solr start --host 0.0.0.0 --port 8983 --user-managed
+#bin/solr stop -p 8983
 
 
 # passenger_car = Category.objects.create(name = 'passenger car')

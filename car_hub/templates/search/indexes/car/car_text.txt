@@ -1,0 +1,4 @@
+{{ object.brand }}
+{{ object.model }}
+{{ object.year }}
+{{ object.price }}
