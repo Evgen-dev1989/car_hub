@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    <form method="get" action=".">
+        <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search...">
+        <button type="submit">Search</button>
+    </form>
+
+    <ul>
+        {% for result in page.object_list %}
+            <li>
+                <a href="{{ result.object.get_absolute_url }}">{{ result.object.brand }} {{ result.object.model }}</a>
+                ({{ result.object.year }}, {{ result.object.price }} ₽)
+            </li>
+        {% empty %}
+            <li>No results found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

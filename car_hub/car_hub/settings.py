@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
+
 from config import email_host_user, password
+
 """
 Django settings for car_hub project.
 
@@ -12,8 +14,6 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
-from pathlib import Path
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

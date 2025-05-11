@@ -9,7 +9,7 @@ from client.views import delete_all_users,  all_clients
 from services import CustomLoginView, LatestCarsFeed, CarSitemap
 from django.views.generic import TemplateView
 from django.contrib.sitemaps.views import sitemap
-
+from car.views import CarSearchView
 
 
 router = SimpleRouter()
@@ -39,6 +39,7 @@ urlpatterns = [
     path('car/<int:car_id>/reviews/', reviews_show, name='reviews_show'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('rss/', LatestCarsFeed(), name='rss_feed'),
+    path('search/', CarSearchView.as_view(), name='haystack_search'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 urlpatterns += router.urls

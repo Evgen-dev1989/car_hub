@@ -13,6 +13,12 @@ from services import ReviewForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
 from config import email_host_user
+from haystack.generic_views import SearchView
+
+
+class CarSearchView(SearchView):
+    template_name = 'search/search.html'
+    
 def cars_categories_page(request):
 
     cargo_cars = get_subcategories_cargo() 
