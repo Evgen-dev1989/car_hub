@@ -28,7 +28,7 @@ class Car(models.Model):
         return f"{self.brand} {self.model} ({self.year})"
     
     def get_absolute_url(self):
-        return reverse('category_detail', args=[self.id])
+        return reverse('car_detail', args=[self.id]) #, self.category.id
     
 
 class Review(models.Model):

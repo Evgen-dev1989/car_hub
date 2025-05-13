@@ -4,7 +4,7 @@ from django.urls import path, include
 from rest_framework.routers import SimpleRouter
 from api.serializers_car import CarSerializer
 from car.models import Car
-from car.views import Car_View
+from car.views import Car_View, car_detail
 from client.views import delete_all_users,  all_clients
 from services import CustomLoginView, LatestCarsFeed, CarSitemap
 from django.views.generic import TemplateView
@@ -40,6 +40,7 @@ urlpatterns = [
     path('login/', CustomLoginView.as_view(), name='login'),
     path('rss/', LatestCarsFeed(), name='rss_feed'),
     path('search/', CarSearchView.as_view(), name='haystack_search'),
+    path('car//<int:pk>/', car_detail, name='car_detail'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 urlpatterns += router.urls

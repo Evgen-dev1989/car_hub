@@ -20,7 +20,8 @@ class CarSearchView(SearchView):
     template_name = 'search/search.html'
     queryset = SearchQuerySet().all()
     context_object_name = 'object_list'
-    
+    paginate_by = 20 
+
 def cars_categories_page(request):
 
     cargo_cars = get_subcategories_cargo() 
@@ -34,6 +35,20 @@ def category_detail(request, category_id):
     form = ReviewForm()  
     reviews = Review.objects.filter(car__category=category)
     return render(request, 'category_detail.html', {'category': category, 'cars': cars,'form': form, 'reviews': reviews})
+
+
+
+# def car_detail(request, pk, category_id):
+
+#     category = get_object_or_404(Category, id=category_id) 
+#     car = get_object_or_404(Car, pk=pk)
+#     form = ReviewForm()  
+#     reviews = Review.objects.filter(car__category=category)
+#     return render(request, 'category_detail.html', {'category': category, 'cars': car,'form': form, 'reviews': reviews})
+
+def car_detail(request, pk):
+    car = get_object_or_404(Car, pk=pk)
+    return render(request, 'category_detail.html', {'car': car})
 
 
 

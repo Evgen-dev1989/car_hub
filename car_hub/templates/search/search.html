@@ -11,10 +11,12 @@
         <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search...">
         <button type="submit">Search</button>
     </form>
+    <p>object_list: {{ object_list }}</p>
+    <p>page: {{ page }}</p>
     {% if query %}
     <h2>Results for "{{ query }}":</h2>
     <ul>
-        {% for result in page.object_list %}
+        {% for result in object_list%}
             <li>
                 <a href="{{ result.object.get_absolute_url }}">{{ result.object.brand }} {{ result.object.model }}</a>
                 ({{ result.object.year }}, {{ result.object.price }} ₽)
@@ -24,5 +26,6 @@
         {% endfor %}
     </ul>
     {% endif %}
+   
 </body>
 </html>
