@@ -7,11 +7,12 @@
 </head>
 <body>
     <h1>Search Results</h1>
-    <form method="get" action=".">
+    <form method="get" action="/search/">
         <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search...">
         <button type="submit">Search</button>
     </form>
-
+    {% if query %}
+    <h2>Results for "{{ query }}":</h2>
     <ul>
         {% for result in page.object_list %}
             <li>
@@ -22,5 +23,6 @@
             <li>No results found.</li>
         {% endfor %}
     </ul>
+    {% endif %}
 </body>
 </html>

@@ -14,10 +14,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
 from config import email_host_user
 from haystack.generic_views import SearchView
-
+from haystack.query import SearchQuerySet
 
 class CarSearchView(SearchView):
     template_name = 'search/search.html'
+    queryset = SearchQuerySet().all()
+    context_object_name = 'object_list'
     
 def cars_categories_page(request):
 
