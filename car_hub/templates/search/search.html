@@ -11,8 +11,7 @@
         <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search...">
         <button type="submit">Search</button>
     </form>
-    <p>object_list: {{ object_list }}</p>
-    <p>page: {{ page }}</p>
+
     {% if query %}
     <h2>Results for "{{ query }}":</h2>
     <ul>

@@ -38,6 +38,10 @@
             <a href="{% url 'registr' %}" class="text-white me-3">Registration</a>
             <a href="{% url 'cart_detail' %}" class="text-white">Cart</a>
         </nav>
+        <form class="d-flex justify-content-center mt-3" method="get" action="{% url 'haystack_search' %}" style="max-width: 500px; margin: 0 auto;">
+        <input class="form-control me-2" type="text" name="q" value="{{ request.GET.q }}" placeholder="Search cars..." aria-label="Search">
+        <button class="btn btn-outline-light" type="submit">Search car</button>
+    </form>
     </header>
 
     <div class="container">
