@@ -38,17 +38,14 @@ def category_detail(request, category_id):
 
 
 
-# def car_detail(request, pk, category_id):
-
-#     category = get_object_or_404(Category, id=category_id) 
-#     car = get_object_or_404(Car, pk=pk)
-#     form = ReviewForm()  
-#     reviews = Review.objects.filter(car__category=category)
-#     return render(request, 'category_detail.html', {'category': category, 'cars': car,'form': form, 'reviews': reviews})
-
 def car_detail(request, pk):
+
     car = get_object_or_404(Car, pk=pk)
-    return render(request, 'category_detail.html', {'car': car})
+    category = car.category
+    form = ReviewForm()  
+    reviews = Review.objects.filter(car=car)
+    return render(request, 'result_search_car.html', {'category': category, 'car': car,'form': form, 'reviews': reviews})
+
 
 
 

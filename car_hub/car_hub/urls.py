@@ -24,6 +24,7 @@ urlpatterns = [
     #path('client/', include('client.urls')),
     path('car/', cars_categories_page, name='car'),
     path('car/', user_register, name='car2'),
+    path('car/<int:pk>/', car_detail, name='car_detail'),
     path('car/<int:category_id>/', category_detail, name='category_detail'),
     path('add/<int:car_id>/', cart_add, name='cart_add'),
     path('remove/<int:car_id>/', cart_delete, name='cart_remove'),
@@ -40,7 +41,6 @@ urlpatterns = [
     path('login/', CustomLoginView.as_view(), name='login'),
     path('rss/', LatestCarsFeed(), name='rss_feed'),
     path('search/', CarSearchView.as_view(), name='haystack_search'),
-    path('car//<int:pk>/', car_detail, name='car_detail'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 urlpatterns += router.urls
