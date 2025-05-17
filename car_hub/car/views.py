@@ -43,6 +43,7 @@ def category_detail(request, category_id):
         'reviews': reviews
     })
 
+
 def car_detail(request, pk):
 
     car = get_object_or_404(Car, pk=pk)
@@ -87,7 +88,7 @@ def user_register(request):
                 return redirect('car')
             except Exception as e:
                 messages.error(request, f"An error occurred while registering: {e}")
-                return redirect('registr')
+                return redirect('car_register') 
     else:
         form = ClientForm()
 
@@ -170,7 +171,7 @@ def reviews_add(request, car_id):
                 review.client = client  
             except Client.DoesNotExist:
                 messages.error(request, f"Client with email {email} not found. Please register.")
-                return redirect('registr')  
+                return redirect('car_register') 
 
             review.save()
             messages.success(request, "Your review has been successfully added.")

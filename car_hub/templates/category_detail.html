@@ -36,12 +36,11 @@
         <input class="form-control me-2" type="text" name="q" value="{{ request.GET.q }}" placeholder="Search cars..." aria-label="Search">
         <button class="btn btn-outline-light" type="submit">Search car</button>
     </header>
-       <h3>Category: {{ category.name }}</h3>
-        <p>DEBUG: cars = {{ cars }}</p>
-        <p>{{ cars|length }} машин найдено</p>
+    
     <div class="container">
-     
-
+        
+        
+        <h3>Category: {{ category.name }}</h3>
         {% if cars %}
         
             <ul class="list-group">
@@ -50,8 +49,48 @@
                     <strong>{{ car.brand }} {{ car.model }}</strong>
                     <p>Year: {{ car.year }}</p>
                     <p>Color: {{ car.color }}</p>
+                    <p>Price: ${{ car.price }}</p>
+                    <p>reviews: ${{ car.reviews }}</p>
+
                     <a class="btn btn-success" href="{% url 'cart_add' car.id %}" role="button">Add to Cart</a>
                 </li>
+                {% for car in cars %}
+    <li class="list-group-item">
+        <strong>{{ car.brand }} {{ car.model }}</strong>
+        <p>Year: {{ car.year }}</p>
+        <p>Color: {{ car.color }}</p>
+        <p>Price: ${{ car.price }}</p>
+
+        <a class="btn btn-success mt-2" href="{% url 'cart_add' car.id %}" role="button">Add to Cart</a>
+        <div>
+            <strong>Reviews:</strong>
+            <ul>
+                {% for review in car.reviews.all %}
+                    <li>{{ review.text }}{% if review.client %} ({{ review.client.email }}){% endif %}</li>
+                {% empty %}
+                    <li>Нет отзывов</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+     </li>
+     <li>
+          <form method="post" action="{% url 'reviews_add' car.id %}">
+            {% csrf_token %}
+            <div class="mb-2">
+                <input type="email" name="email" class="form-control" placeholder="Your email" required>
+            </div>
+            <div class="mb-2">
+                <textarea name="text" class="form-control" placeholder="Your review" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">Write a review</button>
+        </form>
+    </li>>   
+      
+
+        
+   
+{% endfor %}
                 {% endfor %}
             </ul>
         {% else %}
