@@ -28,15 +28,20 @@ def cars_categories_page(request):
     passenger_cars = get_subcategories_passenger() 
     return render(request, 'categories_cars.html', context={'cargo_cars': cargo_cars, 'passenger_cars': passenger_cars})
 
+
 def category_detail(request, category_id):
-
-    category = get_object_or_404(Category, id=category_id) 
-    cars = Car.objects.filter(category=category)
-    form = ReviewForm()  
-    reviews = Review.objects.filter(car__category=category)
-    return render(request, 'category_detail.html', {'category': category, 'cars': cars,'form': form, 'reviews': reviews})
-
-
+    category = get_object_or_404(Category, id=category_id)
+    subcategories = category.subcategories.all()
+    category_ids = [category.id] + [sub.id for sub in subcategories]
+    cars = Car.objects.filter(category_id__in=category_ids)
+    form = ReviewForm()
+    reviews = Review.objects.filter(car__category__in=category_ids)
+    return render(request, 'category_detail.html', {
+        'category': category,
+        'cars': cars,
+        'form': form,
+        'reviews': reviews
+    })
 
 def car_detail(request, pk):
 
