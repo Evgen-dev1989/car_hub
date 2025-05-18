@@ -5,12 +5,11 @@ from rest_framework.viewsets import ModelViewSet
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from services import get_subcategories_cargo, get_subcategories_passenger, Cart, ClientForm
 from api.serializers_car import CarSerializer
-from .models import Category, Car, Review
+from .models import Category, Car, Review, Payment
 from client.models import Client
 from django.contrib.auth.models import User
 from django.contrib import messages
 from services import ReviewForm
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
 from config import email_host_user
 from haystack.generic_views import SearchView
@@ -106,6 +105,29 @@ def cart_add(request, car_id):
         category_id = 1 
 
     return redirect('category_detail', category_id=category_id)
+
+
+def plancing_order(request, car_id):
+    car = get_object_or_404(Car, id=car_id)
+    cart = Cart(request)
+    cart.add(car=car, quantity=1)
+
+    if request.user.is_authenticated:
+        try:
+            client = Client.objects.get(user=request.user)
+            paymant = Payment.objects.create(
+                client=client,
+                amount=car.price,
+                payment_method='cash',
+                car=car
+            )
+            paymant.save()
+            
+            print("Thank you for your purchase, we sent you an email")
+        except Client.DoesNotExist:
+            print("Client not found. Email not sent.")
+        return redirect('cart_detail', category_id=car.category.id)
+    return redirect('category_detail', category_id=car.category.id)
 
 
 def cart_send_mail(request, car_id):
