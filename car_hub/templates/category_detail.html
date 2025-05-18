@@ -51,7 +51,6 @@
                     <p>Year: {{ car.year }}</p>
                     <p>Color: {{ car.color }}</p>
                     <p>Price: ${{ car.price }}</p>
-                    <p>reviews: ${{ car.reviews }}</p>
 
                     <a class="btn btn-success" href="{% url 'cart_add' car.id %}" role="button">Add to Cart</a>
                 </li>
@@ -59,10 +58,12 @@
         <div>
             <strong>Reviews:</strong>
             <ul>
-                {% for review in car.reviews.all %}
-                    <li>{{ review.text }}{% if review.client %} ({{ review.client.email }}){% endif %}</li>
+               {% for review in car.reviews.all %}
+                    <strong>{{ review.client }} {{ review.client.email }}</strong>
+                    <p>review: {{ review.text }}</p>
+               
                 {% empty %}
-                    <li>Нет отзывов</li>
+                    <li>No reviews</li>
                 {% endfor %}
             </ul>
         </div>
@@ -79,7 +80,7 @@
             </div>
             <button type="submit" class="btn btn-primary btn-sm">Write a review</button>
         </form>
-    </li>>   
+    </li> 
       
                 {% endfor %}
             </ul>

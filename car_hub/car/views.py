@@ -189,10 +189,10 @@ def reviews_add(request, car_id):
     })
 
 
-def reviews_show(request, car_id):
-    car = get_object_or_404(Car, id=car_id)
-    reviews = Review.objects.filter(car=car)
-    return render(request, 'category_detail', {'car': car, 'reviews': reviews})
+# def reviews_show(request, car_id):
+#     car = get_object_or_404(Car, id=car_id)
+#     reviews = Review.objects.filter(car=car)
+#     return render(request, 'category_detail', {'car': car, 'reviews': reviews})
 
 class Car_View(ModelViewSet):
     queryset = Car.objects.all()

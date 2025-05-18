@@ -1,4 +1,4 @@
-from car.views import cars_categories_page, category_detail, cart_add, cart_view, cart_delete, cart_clear, reviews_add, user_register, cart_send_mail, reviews_show
+from car.views import cars_categories_page, category_detail, cart_add, cart_view, cart_delete, cart_clear, reviews_add, user_register, cart_send_mail#, reviews_show
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter
@@ -36,7 +36,7 @@ urlpatterns = [
     path('delete_users/', delete_all_users, name='delete'),
     path('clients/',  all_clients, name='all_clients'),
     path('car/<int:car_id>/reviews/add/', reviews_add, name='reviews_add'),
-    path('car/<int:car_id>/reviews/', reviews_show, name='reviews_show'),
+    #path('car/<int:car_id>/reviews/', reviews_show, name='reviews_show'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('rss/', LatestCarsFeed(), name='rss_feed'),
     path('search/', CarSearchView.as_view(), name='haystack_search'),
