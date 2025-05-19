@@ -48,7 +48,7 @@
                 <li class="list-group-item">
                     {{ item.car.brand }} {{ item.car.model }} - {{ item.quantity }} шт.
                     ({{ item.total_price }} ₽)
-                    <a class="btn btn-success" href="{% url 'cart_send_mail' item.car.id %}" role="button">Go plancing order</a>
+                    <a class="btn btn-success" href="{% url 'placing_order' item.car.id %}" role="button">Go placing  an order</a>
                     <a class="btn btn-danger" href="{% url 'cart_remove' item.car.id %}">Remove</a>
                 </li>
                 {% endfor %}

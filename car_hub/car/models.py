@@ -2,6 +2,7 @@ from client.models import Client
 from django.db import models
 from django.contrib.syndication.views import Feed
 from django.urls import reverse
+from django import forms
 
 class Category(models.Model):
 
@@ -76,3 +77,8 @@ class Payment(models.Model):
     
     def __str__(self):
         return f"Payment {self.id} by {self.client.user_name or self.client.user.username}"
+
+class PaymentForm(forms.ModelForm):
+    class Meta:
+        model = Payment
+        fields = ['payment_method']

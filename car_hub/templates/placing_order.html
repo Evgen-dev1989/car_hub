@@ -42,9 +42,9 @@
 
     <div class="container">
         <h3>Placing an order</h3>
-        {% if order %}
+        {% if paymant %}
             <ul class="list-group">
-                {% for item in order %}
+                {% for item in paymant %}
                 <li class="list-group-item">
                     {{ item.car.brand }} {{ item.car.model }} - {{ item.quantity }} шт.
                     ({{ item.total_price }} ₽)
@@ -59,6 +59,28 @@
             <p>Your order is empty.</p>
         {% endif %}
     </div>
+
+
+    <div class="container">
+        <h3>Your order</h3>
+        {% if cart %}
+            <ul class="list-group">
+                {% for item in cart %}
+                <li class="list-group-item">
+                    {{ item.car.brand }} {{ item.car.model }} - {{ item.quantity }} шт.
+                    ({{ item.total_price }} ₽)
+                   
+                    <a class="btn btn-danger" href="{% url 'cart_remove' item.car.id %}">Remove</a>
+                </li>
+                {% endfor %}
+            </ul>
+            <p class="mt-3"><strong>Total Cost:</strong> {{ cart.get_total_price }} ₽</p>
+            <a class="btn btn-warning" href="{% url 'cart_clear' %}">Clear Cart</a>
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
+    </div>
+
 
     <footer class="text-center mt-5">
         <p>&copy; 2025 Car Hub. All rights reserved.</p>
