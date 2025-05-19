@@ -127,39 +127,16 @@ def placing_order(request, car_id):
                     payment.status = 'Pending'
                     payment.car = car
                     payment.save()
- 
-            return render(request, 'placing_order.html', {'payment': payment, 'cart': cart})
-    
+            else:
+                form = PaymentForm()
+                return render(request, 'placing_order.html', {'form': form, 'payment': payment, 'cart': cart})
+
         except Client.DoesNotExist:
             print("Client not found. Please register.")
         return redirect('car_register') 
     else:
-        form = PaymentForm()
-
-    return render(request, 'placing_order.html', {'form': form, 'car': car})
-
-
-def placing_order(request, car_id):
-    car = get_object_or_404(Car, pk=car_id)
-    client = ... # получите текущего клиента
-
-    if request.method == 'POST':
-        form = PaymentForm(request.POST)
-        if form.is_valid():
-            payment = form.save(commit=False)
-            payment.client = client
-            payment.amount = car.price
-            payment.transaction_id = str(uuid.uuid4())
-            payment.currency = 'EUR'
-            payment.status = 'Pending'
-            payment.car = car
-            payment.save()
-            # ...дальше логика
-            return render(request, 'placing_order.html', {'payment': payment})
-    else:
-        form = PaymentForm()
-
-    return render(request, 'placing_order.html', {'form': form, 'car': car})
+        messages.error(request, "You need to be logged in to place an order.")
+        return redirect('login')
 
 
 def cart_send_mail(request, car_id):
