@@ -40,6 +40,18 @@
         <button class="btn btn-outline-light" type="submit">Search car</button>
     </header>
 
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    
+    
+    {{ request.user.is_authenticated }}
+    {{ request.user }}
+    
     <div class="container">
         <h3>Your Cart</h3>
         {% if cart %}

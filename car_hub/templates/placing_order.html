@@ -40,6 +40,17 @@
         <button class="btn btn-outline-light" type="submit">Search car</button>
     </header>
 
+    {{ request.user.is_authenticated }}
+    {{ request.user }}
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
     <div class="container">
         <h3>Placing an order</h3>
         {% if paymant %}
@@ -53,8 +64,11 @@
                 </li>
                 {% endfor %}
             </ul>
-            <p class="mt-3"><strong>Total Cost:</strong> {{ cart.get_total_price }} ₽</p>
-            <a class="btn btn-warning" href="{% url 'cart_clear' %}">Clear Cart</a>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Оплатить</button>
+                </form>
         {% else %}
             <p>Your order is empty.</p>
         {% endif %}

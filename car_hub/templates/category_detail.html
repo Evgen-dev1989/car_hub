@@ -37,10 +37,17 @@
         <button class="btn btn-outline-light" type="submit">Search car</button>
         </form>
     </header>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     
     <div class="container">
-        
-        
+    
         <h3>Category: {{ category.name }}</h3>
         {% if cars %}
         

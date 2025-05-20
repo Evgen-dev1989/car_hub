@@ -15,6 +15,7 @@ from config import email_host_user
 from haystack.generic_views import SearchView
 from haystack.query import SearchQuerySet
 import uuid
+from django.contrib.auth import login
 
 class CarSearchView(SearchView):
     template_name = 'search/search.html'
@@ -83,7 +84,7 @@ def user_register(request):
                 client.user = user
                 client.email = username.strip() 
                 client.save()
-
+                login(request, user)
                 messages.success(request, "You have registered successfully.")
                 return redirect('car')
             except Exception as e:
@@ -114,7 +115,11 @@ def placing_order(request, car_id):
     cart.add(car=car, quantity=1)
     
     if request.user.is_authenticated:
-        client = Client.objects.get(user=request.user)
+        try:
+            client = Client.objects.get(user=request.user)
+        except Client.DoesNotExist:
+            messages.error(request, "Client not found. Please register.")
+            return redirect('car_register')
         try:
             if request.method == 'POST':
                 form = PaymentForm(request.POST)
@@ -129,15 +134,13 @@ def placing_order(request, car_id):
                     payment.save()
             else:
                 form = PaymentForm()
-                return render(request, 'placing_order.html', {'form': form, 'payment': payment, 'cart': cart})
-
-        except Client.DoesNotExist:
-            print("Client not found. Please register.")
-        return redirect('car_register') 
+                return render(request, 'placing_order.html', {'form': form, 'cart': cart})
+        except Exception as e:
+            messages.error(request, f"Error: {e}")
+            return redirect('car')
     else:
         messages.error(request, "You need to be logged in to place an order.")
         return redirect('login')
-
 
 def cart_send_mail(request, car_id):
     car = get_object_or_404(Car, id=car_id)
