@@ -1,16 +1,15 @@
-from car.views import cars_categories_page, category_detail, cart_add, cart_view, cart_delete, cart_clear, reviews_add, user_register, cart_send_mail, placing_order
+from car.views import (Car_View, CarSearchView, car_detail,
+                       cars_categories_page, cart_add, cart_clear, cart_delete,
+                       cart_send_mail, cart_view, category_detail,
+                       placing_order, reviews_add, user_register)
+from client.views import all_clients, delete_all_users
 from django.contrib import admin
-from django.urls import path, include
-from rest_framework.routers import SimpleRouter
-from api.serializers_car import CarSerializer
-from car.models import Car
-from car.views import Car_View, car_detail
-from client.views import delete_all_users,  all_clients
-from services import CustomLoginView, LatestCarsFeed, CarSitemap
-from django.views.generic import TemplateView
+from django.contrib.auth.views import LogoutView
 from django.contrib.sitemaps.views import sitemap
-from car.views import CarSearchView
-
+from django.urls import include, path
+from django.views.generic import TemplateView
+from rest_framework.routers import SimpleRouter
+from services import CarSitemap, CustomLoginView, LatestCarsFeed
 
 router = SimpleRouter()
 router.register('api/cars', Car_View, basename='car')
@@ -40,9 +39,11 @@ urlpatterns = [
     path('login/', CustomLoginView.as_view(), name='login'),
     path('rss/', LatestCarsFeed(), name='rss_feed'),
     path('search/', CarSearchView.as_view(), name='haystack_search'),
+    path('logout/', LogoutView.as_view(next_page='car'), name='logout'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 urlpatterns += router.urls
+
 
 
 
