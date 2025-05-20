@@ -179,16 +179,14 @@ class Cart:
         self.session.modified = True
 
 class CustomLoginView(auth_views.LoginView):
-    template_name = 'categories_cars.html' 
+    template_name = 'login.html'  
     redirect_authenticated_user = True  
     next_page = reverse_lazy('car')  
 
     def form_valid(self, form):
-
         user = form.get_user()
         if not Client.objects.filter(user=user).exists():
- 
-            return redirect('registr')
+            return redirect('user_register')  
         return super().form_valid(form)
 
 def get_subcategories_passenger():

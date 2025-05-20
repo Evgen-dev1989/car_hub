@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart - Car Hub</title>
-    <link rel="alternate" type="application/rss+xml" title="Car Hub RSS Feed" href="{% url 'rss_feed' %}">
+    <title>Car Categories - Car Hub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -22,6 +21,12 @@
         .container {
             margin-top: 50px;
         }
+        .dropdown-menu li a {
+            color: #333;
+        }
+        .dropdown-menu li a:hover {
+            background-color: #f8f9fa;
+        }
     </style>
 </head>
 <body>
@@ -30,47 +35,42 @@
         <nav>
             <a href="{% url 'car' %}" class="text-white me-3">Home</a>
             <a href="{% url 'contacts' %}" class="text-white me-3">Contacts</a>
-            <a href="{% url 'user_register' %}" class="text-white me-3">Registration</a>
+            <a href="{% url 'car_register' %}" class="text-white me-3">Registration</a>
             <a href="{% url 'cart_detail' %}" class="text-white">Cart</a>
-            <a href="{% url 'rss_feed' %}" class="text-white">RSS Feed</a>
-            
         </nav>
         <form class="d-flex justify-content-center mt-3" method="get" action="{% url 'haystack_search' %}" style="max-width: 500px; margin: 0 auto;">
         <input class="form-control me-2" type="text" name="q" value="{{ request.GET.q }}" placeholder="Search cars..." aria-label="Search">
         <button class="btn btn-outline-light" type="submit">Search car</button>
+    </form>
     </header>
 
-    {% if messages %}
+
+        {% if messages %}
         <ul class="messages">
             {% for message in messages %}
                 <li class="{{ message.tags }}">{{ message }}</li>
             {% endfor %}
         </ul>
         {% endif %}
-    
-    
-    {{ request.user.is_authenticated }}
-    {{ request.user }}
-    
-    <div class="container">
-        <h3>Your Cart</h3>
-        {% if cart %}
-            <ul class="list-group">
-                {% for item in cart %}
-                <li class="list-group-item">
-                    {{ item.car.brand }} {{ item.car.model }} - {{ item.quantity }} шт.
-                    ({{ item.total_price }} ₽)
-                    <a class="btn btn-success" href="{% url 'placing_order' item.car.id %}" role="button">Go placing  an order</a>
-                    <a class="btn btn-danger" href="{% url 'cart_remove' item.car.id %}">Remove</a>
-                </li>
-                {% endfor %}
-            </ul>
-            <p class="mt-3"><strong>Total Cost:</strong> {{ cart.get_total_price }} ₽</p>
-            <a class="btn btn-warning" href="{% url 'cart_clear' %}">Clear Cart</a>
-        {% else %}
-            <p>Your cart is empty.</p>
+        
+
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                {{ form.errors }}
+            </div>
         {% endif %}
-    </div>
+
+
+        {% if not request.user.is_authenticated %}
+        <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+
 
     <footer class="text-center mt-5">
         <p>&copy; 2025 Car Hub. All rights reserved.</p>
