@@ -63,11 +63,11 @@
                 </li>
     
         <div>
-            <strong>Reviews:</strong>
+
             <ul>
                {% for review in car.reviews.all %}
                     <strong>client: {{ review.client }}</strong>
-                    <p> {{ review.text }}</p>
+                    <p>review: {{ review.text }}</p>
                
                 {% empty %}
                     <li>No reviews</li>
