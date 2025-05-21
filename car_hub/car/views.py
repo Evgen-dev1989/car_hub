@@ -119,7 +119,7 @@ def placing_order(request, car_id):
             client = Client.objects.get(user=request.user)
         except Client.DoesNotExist:
             messages.error(request, "Client not found. Please register.")
-            return redirect('car_register')
+            return redirect('user_register')
         try:
             if request.method == 'POST':
                 form = PaymentForm(request.POST)

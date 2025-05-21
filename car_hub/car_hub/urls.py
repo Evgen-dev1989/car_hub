@@ -28,7 +28,7 @@ urlpatterns = [
     path('add/<int:car_id>/', cart_add, name='cart_add'),
     path('remove/<int:car_id>/', cart_delete, name='cart_remove'),
     path('cart/', cart_view, name='cart_detail'),
-    path('cart/<int:car_id>/placing_order/', placing_order, name='placing_order'),
+    path('cart/<int:car_id>/placing-order/', placing_order, name='placing_order'),
     path('cart/<int:car_id>/send_mail/', cart_send_mail, name='cart_send_mail'),
     path('clear/', cart_clear, name='cart_clear'),
     path('api-auth/', include('rest_framework.urls')),
