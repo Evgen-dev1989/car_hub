@@ -67,13 +67,12 @@
                     {{ item.car.brand }} {{ item.car.model }} - {{ item.quantity }} шт.
                     ({{ item.total_price }} ₽)
 
-                    <<a class="btn btn-danger" href="{% url 'cart_remove' item.car.id %}">Remove</a>
                 </li>
             </ul>
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                    <a class="btn btn-danger" href="{% url 'delete_order' item.car.id %}">Remove from order</a>
+                    <a class="btn btn-danger" href="{% url 'delete_order' item.car.id %}">Remove order</a>
                 {% endfor %}
             </form>
         {% else %}

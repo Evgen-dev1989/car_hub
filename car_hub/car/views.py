@@ -151,7 +151,7 @@ def delete_order(request, car_id):
     order = Cart(request)
     car = get_object_or_404(Car, id=car_id)
     order.remove(car)
-    return redirect('placing_order')
+    return redirect('cart_detail')
 
 
 def cart_send_mail(request, car_id):
