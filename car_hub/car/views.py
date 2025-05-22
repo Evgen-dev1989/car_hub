@@ -112,7 +112,7 @@ def cart_add(request, car_id):
 def placing_order(request, car_id):
     car = get_object_or_404(Car, pk=car_id)
     cart = Cart(request)
-    cart.add(car=car, quantity=1)
+
 
     if not request.user.is_authenticated:
         messages.error(request, "You need to be logged in to place an order.")
