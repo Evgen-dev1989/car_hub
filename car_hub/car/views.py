@@ -113,34 +113,46 @@ def placing_order(request, car_id):
     car = get_object_or_404(Car, pk=car_id)
     cart = Cart(request)
     cart.add(car=car, quantity=1)
-    
-    if request.user.is_authenticated:
-        try:
-            client = Client.objects.get(user=request.user)
-        except Client.DoesNotExist:
-            messages.error(request, "Client not found. Please register.")
-            return redirect('user_register')
-        try:
-            if request.method == 'POST':
-                form = PaymentForm(request.POST)
-                if form.is_valid():
-                    payment = form.save(commit=False)
-                    payment.client = client
-                    payment.amount = car.price
-                    payment.transaction_id = str(uuid.uuid4())
-                    payment.currency = 'EUR'
-                    payment.status = 'Pending'
-                    payment.car = car
-                    payment.save()
-            else:
-                form = PaymentForm()
-                return render(request, 'placing_order.html', {'form': form, 'cart': cart})
-        except Exception as e:
-            messages.error(request, f"Error: {e}")
-            return redirect('car')
-    else:
+
+    if not request.user.is_authenticated:
         messages.error(request, "You need to be logged in to place an order.")
         return redirect('login')
+
+    try:
+        client = Client.objects.get(user=request.user)
+    except Client.DoesNotExist:
+        messages.error(request, "Client not found. Please register.")
+        return redirect('user_register')
+
+    if request.method == 'POST':
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            payment = form.save(commit=False)
+            payment.client = client
+            payment.amount = car.price
+            payment.transaction_id = str(uuid.uuid4())
+            payment.currency = 'EUR'
+            payment.status = 'Pending'
+            payment.car = car
+            payment.save()
+            messages.success(request, "Order placed successfully!")
+            return redirect('cart_detail')
+    else:
+        form = PaymentForm()
+
+    return render(request, 'placing_order.html', {
+        'form': form,
+        'cart': cart,
+    })
+
+
+def order_delete(request, car_id):
+  
+    cart = Cart(request)
+    car = get_object_or_404(Car, id=car_id)
+    cart.remove(car)
+    return redirect('cart_detail')
+
 
 def cart_send_mail(request, car_id):
     car = get_object_or_404(Car, id=car_id)
@@ -181,9 +193,6 @@ def cart_clear(request):
     cart.clear()
     return redirect('cart_detail')
 
-
-from django.contrib.auth.models import AnonymousUser
-
 def reviews_add(request, car_id):
     car = get_object_or_404(Car, id=car_id)
 
@@ -222,11 +231,6 @@ def reviews_add(request, car_id):
         'reviews': reviews
     })
 
-
-# def reviews_show(request, car_id):
-#     car = get_object_or_404(Car, id=car_id)
-#     reviews = Review.objects.filter(car=car)
-#     return render(request, 'category_detail', {'car': car, 'reviews': reviews})
 
 class Car_View(ModelViewSet):
     queryset = Car.objects.all()
