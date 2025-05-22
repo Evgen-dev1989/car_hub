@@ -68,6 +68,9 @@ class Payment(models.Model):
         ])
     car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='payments', null=True, blank=True)
 
+
+
+
     def remove(self, car):
         car_id = str(car.id)
         if car_id in self.car:

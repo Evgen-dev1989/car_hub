@@ -146,12 +146,12 @@ def placing_order(request, car_id):
     })
 
 
-def order_delete(request, car_id):
+def delete_order(request, car_id):
   
-    cart = Cart(request)
+    order = Cart(request)
     car = get_object_or_404(Car, id=car_id)
-    cart.remove(car)
-    return redirect('cart_detail')
+    order.remove(car)
+    return redirect('placing_order')
 
 
 def cart_send_mail(request, car_id):
