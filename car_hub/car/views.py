@@ -154,25 +154,30 @@ def delete_order(request, car_id):
     return redirect('cart_detail')
 
 
-def cart_send_mail(request, car_id):
+def send_order(request, car_id):
     car = get_object_or_404(Car, id=car_id)
     cart = Cart(request)
-    cart.add(car=car, quantity=1)
 
     if request.user.is_authenticated:
         try:
             client = Client.objects.get(user=request.user)
+
             send_mail(
                 subject='Purchase Confirmation',
-                message=f'Dear {client.user.username},\n\nYou have successfully completed the purchase of "{car.brand} {car.model}" our manager will contact you shortly.\n\nThank you for choosing us!',
-                from_email=email_host_user, 
-                recipient_list=[client.email], 
+                message=(
+                    f'Dear {client.user.username},\n\n'
+                    f'You have successfully completed the purchase of "{car.brand} {car.model}".\n'
+                    f'Total price: {cart.get_total_price(car)}\n'
+                    'Our manager will contact you shortly.\n\nThank you for choosing us!'
+                ),
+                from_email=email_host_user,
+                recipient_list=[client.email],
                 fail_silently=False,
             )
             print("Thank you for your purchase, we sent you an email")
         except Client.DoesNotExist:
             print("Client not found. Email not sent.")
-        return redirect('cart_detail', category_id=car.category.id)
+        return redirect('cart_detail')
     return redirect('category_detail', category_id=car.category.id)
 
 def cart_delete(request, car_id):

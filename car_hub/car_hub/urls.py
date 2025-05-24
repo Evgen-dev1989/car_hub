@@ -1,6 +1,6 @@
 from car.views import (Car_View, CarSearchView, car_detail,
                        cars_categories_page, cart_add, cart_clear, cart_delete,
-                       cart_send_mail, cart_view, category_detail,
+                       send_order, cart_view, category_detail,
                        placing_order, reviews_add, user_register, delete_order)
 from client.views import all_clients, delete_all_users
 from django.contrib import admin
@@ -30,7 +30,7 @@ urlpatterns = [
     path('cart/', cart_view, name='cart_detail'),
     path('cart/<int:car_id>/placing-order/', placing_order, name='placing_order'),
     path('cart/<int:car_id>/placing-order/del', delete_order, name='delete_order'),
-    path('cart/<int:car_id>/send_mail/', cart_send_mail, name='cart_send_mail'),
+    path('cart/<int:car_id>/placing-order/send_order', send_order, name='send_order'),
     path('clear/', cart_clear, name='cart_clear'),
     path('api-auth/', include('rest_framework.urls')),
     path('contacts/', TemplateView.as_view(template_name='contacts.html'), name='contacts'),

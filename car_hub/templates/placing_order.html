@@ -69,12 +69,16 @@
 
                 </li>
             </ul>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
+            <li class="list-group-item">
+                
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
                     <a class="btn btn-danger" href="{% url 'delete_order' item.car.id %}">Remove order</a>
-                {% endfor %}
-            </form>
+                    {% endfor %}
+                    <a class="btn btn-success" href="" role="button">Buy</a>
+                </form>
+            </li>
         {% else %}
             <p>Your order is empty.</p>
         {% endif %}
