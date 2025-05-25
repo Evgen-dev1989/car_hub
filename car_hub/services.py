@@ -166,6 +166,13 @@ class Cart:
             for item in self.cart.values()
         )
 
+    def get_item_total_price(self, car):
+        car_id = str(car.id)
+        item = self.cart.get(car_id)
+        if item:
+            return Decimal(item['price']) * item['quantity']
+        return Decimal('0.00')
+    
     def clear(self):
         del self.session[settings.CART_SESSION_ID]
         if self.client:

@@ -75,8 +75,8 @@
                     {% csrf_token %}
                     {{ form.as_p }}
                     <a class="btn btn-danger" href="{% url 'delete_order' item.car.id %}">Remove order</a>
+                    <a class="btn btn-success" href="{% url 'send_order' item.car.id %}" role="button">Buy</a>
                     {% endfor %}
-                    <a class="btn btn-success" href="" role="button">Buy</a>
                 </form>
             </li>
         {% else %}

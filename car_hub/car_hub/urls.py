@@ -30,7 +30,7 @@ urlpatterns = [
     path('cart/', cart_view, name='cart_detail'),
     path('cart/<int:car_id>/placing-order/', placing_order, name='placing_order'),
     path('cart/<int:car_id>/placing-order/del', delete_order, name='delete_order'),
-    path('cart/<int:car_id>/placing-order/send_order', send_order, name='send_order'),
+    path('cart/placing-order/send_order/<int:car_id>/', send_order, name='send_order'),
     path('clear/', cart_clear, name='cart_clear'),
     path('api-auth/', include('rest_framework.urls')),
     path('contacts/', TemplateView.as_view(template_name='contacts.html'), name='contacts'),

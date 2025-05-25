@@ -53,9 +53,6 @@ def car_detail(request, pk):
     reviews = Review.objects.filter(car=car)
     return render(request, 'result_search_car.html', {'category': category, 'car': car,'form': form, 'reviews': reviews})
 
-
-
-
 def user_register(request):
     if request.method == 'POST':
         form = ClientForm(request.POST)
@@ -94,7 +91,6 @@ def user_register(request):
         form = ClientForm()
 
     return render(request, 'registration.html', {'form': form})
-
 
 
 def cart_add(request, car_id):
@@ -157,17 +153,17 @@ def delete_order(request, car_id):
 def send_order(request, car_id):
     car = get_object_or_404(Car, id=car_id)
     cart = Cart(request)
+    total_price = cart.get_item_total_price(car)
 
     if request.user.is_authenticated:
         try:
             client = Client.objects.get(user=request.user)
-
             send_mail(
                 subject='Purchase Confirmation',
                 message=(
                     f'Dear {client.user.username},\n\n'
                     f'You have successfully completed the purchase of "{car.brand} {car.model}".\n'
-                    f'Total price: {cart.get_total_price(car)}\n'
+                    f'Total price: {total_price}\n'
                     'Our manager will contact you shortly.\n\nThank you for choosing us!'
                 ),
                 from_email=email_host_user,
@@ -177,8 +173,9 @@ def send_order(request, car_id):
             print("Thank you for your purchase, we sent you an email")
         except Client.DoesNotExist:
             print("Client not found. Email not sent.")
-        return redirect('cart_detail')
-    return redirect('category_detail', category_id=car.category.id)
+        messages.success(request, "Your review has been successfully added.")
+        return redirect('car', category_id=car.category.id)
+    return redirect('registration', category_id=car.category.id)
 
 def cart_delete(request, car_id):
   
