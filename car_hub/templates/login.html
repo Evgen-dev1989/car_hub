@@ -31,6 +31,10 @@
 </head>
 <body>
     <header class="text-center">
+      <a class="btn btn-success" href="{% url 'social:begin' 'facebook' %}" role="button">Login with Facebook</a>
+    <a class="btn btn-success" href="{% url 'social:begin' 'twitter' %}" role="button">Login with Twitter</a>
+    <a class="btn btn-success" href="{% url 'social:begin' 'google-oauth2' %}" role="button">Login with Google</a>
+    <a class="btn btn-success" href="{% url 'social:begin' 'github' %}" role="button">Login with Github</a>
         <h2>Car Hub</h2>
         <nav>
             <a href="{% url 'car' %}" class="text-white me-3">Home</a>

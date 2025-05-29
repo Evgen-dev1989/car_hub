@@ -15,6 +15,26 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = '123456789012345'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
+
+SOCIAL_AUTH_TWITTER_KEY = 'XyZAbCdEfGhIjKlMnOpQrStUvWx'
+SOCIAL_AUTH_TWITTER_SECRET = 'aBcDeFgHiJkLmNoPqRsTuVwXyZaBcDeFgHiJkLmNoPq'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1234567890-abcdefghijklmnopqrstuvwxyz.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'ABCDefghijklmnopQRSTuvwx'
+
+SOCIAL_AUTH_GITHUB_KEY = 'Ov23livUjVMvxpGs0Jv5'
+SOCIAL_AUTH_GITHUB_SECRET = '7048a9c2060a7335f52ec58743425f7314d5018b'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com' 
@@ -56,6 +76,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'client',
     'car',
     'django.contrib.sitemaps',
@@ -65,6 +86,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -85,6 +107,8 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
                 'django.contrib.messages.context_processors.messages',
             ],
         },

@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+      <a class="btn btn-success" href="{% url 'social:begin' 'facebook' %}" role="button">Login with Facebook</a>
+    <a class="btn btn-success" href="{% url 'social:begin' 'twitter' %}" role="button">Login with Twitter</a>
+    <a class="btn btn-success" href="{% url 'social:begin' 'google-oauth2' %}" role="button">Login with Google</a>
+    <a class="btn btn-success" href="{% url 'social:begin' 'github' %}" role="button">Login with Github</a>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cart - Car Hub</title>
