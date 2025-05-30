@@ -21,7 +21,8 @@ sitemaps = {
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('client/', include('client.urls')),
-     path('social-auth/', include('social_django.urls', namespace='social')),
+    path('social-auth/', include('social_django.urls', namespace='social')),
+    path('i18n/', include('django.conf.urls.i18n')),
     path('car/', cars_categories_page, name='car'),
     path('car/register/', user_register, name='user_register'),
     path('car/<int:pk>/', car_detail, name='car_detail'), 

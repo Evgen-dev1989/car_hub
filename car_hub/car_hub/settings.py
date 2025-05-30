@@ -3,6 +3,8 @@ from pathlib import Path
 
 from config import email_host_user, password
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 """
 Django settings for car_hub project.
 
@@ -23,6 +25,19 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+LANGUAGE_CODE = 'en-us'
+
+USE_I18N = True
+
+LANGUAGES = [
+    ('en', 'English'),
+    ('ru', 'Russian'),
+    # Добавьте другие языки по необходимости
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 SOCIAL_AUTH_FACEBOOK_KEY = '123456789012345'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
@@ -90,6 +105,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware'
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
