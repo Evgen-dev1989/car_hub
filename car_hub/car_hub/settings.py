@@ -32,7 +32,7 @@ USE_I18N = True
 LANGUAGES = [
     ('en', 'English'),
     ('ru', 'Russian'),
-    # Добавьте другие языки по необходимости
+    ('uk', 'Ukrainian')
 ]
 
 LOCALE_PATHS = [

@@ -31,16 +31,14 @@
 </head>
 <body>
     <header class="text-center">
-          <a class="btn btn-success" href="{% url 'social:begin' 'facebook' %}" role="button">Login with Facebook</a>
+    <a class="btn btn-success" href="{% url 'social:begin' 'facebook' %}" role="button">Login with Facebook</a>
     <a class="btn btn-success" href="{% url 'social:begin' 'twitter' %}" role="button">Login with Twitter</a>
     <a class="btn btn-success" href="{% url 'social:begin' 'google-oauth2' %}" role="button">Login with Google</a>
     <a class="btn btn-success" href="{% url 'social:begin' 'github' %}" role="button">Login with Github</a>
 
-
+    <br/>
+     <div class="container"></div>
     {% load i18n %}
-    <p>{% trans "Hello" %}</p>
-
-
 
     <form action="{% url 'set_language' %}" method="post">
     {% csrf_token %}
@@ -55,7 +53,8 @@
     </select>
     <input type="submit" value="Change language">
     </form>
-
+    </div>
+    <br/>
 
         <h2>Car Hub</h2>
         <nav>
@@ -74,23 +73,11 @@
         </nav>
     <form class="d-flex justify-content-center mt-3" method="get" action="{% url 'haystack_search' %}" style="max-width: 500px; margin: 0 auto;">
         <input class="form-control me-2" type="text" name="q" value="{{ request.GET.q }}" placeholder="Search cars..." aria-label="Search">
-        <button class="btn btn-outline-light" type="submit">Search car</button>
+        {% load i18n %}
+
+        <button class="btn btn-outline-light" type="submit">{% trans "Search car" %}</button>
         
     </form>
-
-        <form action="{% url 'set_language' %}" method="post">
-        {% csrf_token %}
-        <select name="language">
-            {% get_current_language as LANGUAGE_CODE %}
-            {% get_available_languages as LANGUAGES %}
-            {% for lang in LANGUAGES %}
-                <option value="{{ lang.0 }}"{% if lang.0 == LANGUAGE_CODE %} selected{% endif %}>
-                    {{ lang.1 }}
-                </option>
-            {% endfor %}
-        </select>
-        <input type="submit" value="Change language">
-        </form>
         
     </header>
 
@@ -106,17 +93,14 @@
         </ul>
         {% endif %}
         
-       
-
-
                <div class="container mt-5">
             <div class="row">
                 <div class="col-md-6">
                     <div class="card shadow-sm">
                         <div class="card-header bg-secondary text-white">
-                            <h3 class="mb-0">Cargo Cars</h3>
+
                             <h3 class="mb-0">{% load i18n %}
-                            <p>{% trans "Hello" %}</p></h3>
+                            <p>{% trans "Cargo Cars" %}</p></h3>
                         </div>
                         <div class="card-body">
                             <div class="dropdown">

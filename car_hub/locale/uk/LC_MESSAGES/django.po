@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-30 22:26+0300\n"
+"POT-Creation-Date: 2025-05-31 10:42+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,9 +16,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
+"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
+"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
+"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 #: .\car\models.py:9 .\car\models.py:20 .\car\models.py:21 .\car\models.py:36
 #: .\car\models.py:45 .\car\models.py:50 .\car\models.py:91
 #: .\client\models.py:17
@@ -28,26 +29,19 @@ msgstr ""
 #: .\car\views.py:41 .\car\views.py:48 .\car\views.py:64 .\car\views.py:72
 #: .\car\views.py:113 .\car\views.py:126 .\car\views.py:164 .\car\views.py:172
 #: .\car\views.py:200 .\car\views.py:207 .\car\views.py:212 .\car\views.py:218
-#: .\car\views.py:258 .\templates\categories_cars.html:41
+#: .\car\views.py:258
+msgid "Hello"
+msgstr ""
 
+#: .\templates\categories_cars.html:78
+
+msgid "Search car"
+msgstr "Пошук авто""
+
+
+#: .\templates\categories_cars.html:103
 msgid "Home"
-msgstr "Главная"
+msgstr "Головна"
 
 msgid "Cargo Cars"
-msgstr "Грузовые автомобили"
-
-msgid "Search car"
-msgstr "Поиск машин"
-
-
-msgid "Passenger Cars"
-msgstr "Пассажирские машины"
-
-msgid "Search car"
-msgstr "Поиск машин"
-
-msgid "Search car"
-msgstr "Поиск машин"
-
-msgid "Search car"
-msgstr "Поиск машин"
+msgstr "Вантажні автомобілі"
