@@ -234,6 +234,10 @@ def create_cart(sender, instance, created, **kwargs):
 
         Cart_Model.objects.create(client=instance, data={})
 
+# django-admin makemessages -l ru
+# django-admin compilemessages
+#  {% trans %}
+
 # cd /home/camkaenota/solr-9.8.1
 #bin/solr start --host 0.0.0.0 --port 8983 --user-managed
 #bin/solr stop -p 8983
