@@ -51,3 +51,38 @@ msgstr "Все права защищены"
 
 msgid "Car Categories"
 msgstr "Категории машни"
+
+msgid "Login with Facebook"
+msgstr "Вход с Facebook"
+
+msgid "Login with Twitter"
+msgstr "Вход с Twitter"
+
+msgid "Login with Github"
+msgstr "Вход с Github"
+
+msgid "Contacts"
+msgstr "Контакты"
+
+msgid "Registration"
+msgstr "Регистрация"
+
+msgid "Cart"
+msgstr "Корзина"
+
+msgid "Login"
+msgstr "Вход"
+
+msgid "Logout"
+msgstr "Выход"
+
+
+
+
+
+
+
+
+
+
+
