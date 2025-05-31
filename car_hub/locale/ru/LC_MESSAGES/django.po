@@ -43,11 +43,11 @@ msgstr "Поиск машин"
 msgid "Passenger Cars"
 msgstr "Пассажирские машины"
 
-msgid "Search car"
-msgstr "Поиск машин"
+msgid "Select a Category"
+msgstr "Выбор категории"
 
-msgid "Search car"
-msgstr "Поиск машин"
+msgid "All rights reserved"
+msgstr "Все права защищены"
 
-msgid "Search car"
-msgstr "Поиск машин"
+msgid "Car Categories"
+msgstr "Категории машни"

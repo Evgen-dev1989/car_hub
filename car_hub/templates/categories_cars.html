@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Categories - Car Hub</title>
+    <title> {% trans "Car Categories" %} - Car Hub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -122,12 +122,12 @@
                 <div class="col-md-6">
                     <div class="card shadow-sm">
                         <div class="card-header bg-secondary text-white">
-                            <h3 class="mb-0">Passenger Cars</h3>
+                            <h3 class="mb-0">{% trans "Passenger Cars" %}</h3>
                         </div>
                         <div class="card-body">
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Select a Category
+                                    {% trans "Select a Category" %}
                                 </button>
                                 <ul class="dropdown-menu w-100">
                                     {% for i in passenger_cars %}
@@ -145,7 +145,7 @@
     </div>
 
     <footer class="text-center mt-5">
-        <p>&copy; 2025 Car Hub. All rights reserved.</p>
+        <p>&copy; 2025 Car Hub.{% trans " All rights reserved" %}.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
