@@ -36,8 +36,26 @@
     <a class="btn btn-success" href="{% url 'social:begin' 'google-oauth2' %}" role="button">Login with Google</a>
     <a class="btn btn-success" href="{% url 'social:begin' 'github' %}" role="button">Login with Github</a>
 
+
     {% load i18n %}
     <p>{% trans "Hello" %}</p>
+
+
+
+    <form action="{% url 'set_language' %}" method="post">
+    {% csrf_token %}
+    <select name="language">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% for lang in LANGUAGES %}
+            <option value="{{ lang.0 }}"{% if lang.0 == LANGUAGE_CODE %} selected{% endif %}>
+                {{ lang.1 }}
+            </option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Change language">
+    </form>
+
 
         <h2>Car Hub</h2>
         <nav>

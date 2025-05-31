@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.utils.translation import gettext as _
 
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -14,7 +14,7 @@ class Client(models.Model):
         null=True, 
         blank=True 
     )
-    user_name = models.CharField(max_length=150, unique=True, null=True, blank=True)  # Добавлено поле
+    user_name = models.CharField(max_length=150, unique=True, null=True, blank=True, verbose_name=_("Name"))  
     phone = models.CharField(max_length=15, unique=True, null=True)
     email = models.EmailField(max_length=100, unique=True, null=True)
     birth_date = models.DateField(null=True, blank=True)

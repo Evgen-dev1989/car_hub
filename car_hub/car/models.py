@@ -3,10 +3,10 @@ from django.db import models
 from django.contrib.syndication.views import Feed
 from django.urls import reverse
 from django import forms
-
+from django.utils.translation import gettext as _
 class Category(models.Model):
 
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50, unique=True, verbose_name=_("Name"))
     parent = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True, related_name='subcategories'
     )
@@ -17,8 +17,8 @@ class Category(models.Model):
 class Car(models.Model):
 
     id = models.AutoField(primary_key=True)
-    color = models.CharField(max_length=50)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name="cars")
+    color = models.CharField(max_length=50, verbose_name=_("Name"))
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name="cars", verbose_name=_("Name"))
     brand = models.CharField(max_length=50)
     model = models.CharField(max_length=50)
     year = models.PositiveIntegerField(default=2000, null=True, blank=True)
@@ -33,7 +33,7 @@ class Car(models.Model):
     
 
 class Review(models.Model):
-    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name="reviews")
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name="reviews", verbose_name=_("Name"))
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="reviews", null=True, blank=True)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -42,12 +42,12 @@ def __str__(self):
     return f"Review by {self.client.first_name} {self.client.last_name} on {self.car.brand} {self.car.model}"
 
 class Cart_Model(models.Model):
-    client = models.OneToOneField(Client, on_delete=models.CASCADE, related_name="cart")
+    client = models.OneToOneField(Client, on_delete=models.CASCADE, related_name="cart", verbose_name=_("Name"))
 
     data = models.JSONField(default=dict)
 
 class Payment(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='payments')
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='payments', verbose_name=_("Name"))
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     payment_date = models.DateTimeField(auto_now_add=True)
     payment_method = models.CharField(max_length=50, null=True, blank=True, choices=[
@@ -88,5 +88,6 @@ class Payment(models.Model):
 
 class PaymentForm(forms.ModelForm):
     class Meta:
+        name = forms.CharField(label=_("Name"))
         model = Payment
         fields = ['payment_method']

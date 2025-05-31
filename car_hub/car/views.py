@@ -1,21 +1,26 @@
 import os
 import sys
-from django.shortcuts import get_object_or_404, render, redirect
+
+from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework.viewsets import ModelViewSet
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from services import get_subcategories_cargo, get_subcategories_passenger, Cart, ClientForm
+import uuid
+
 from api.serializers_car import CarSerializer
-from .models import Category, Car, Review, PaymentForm
 from client.models import Client
-from django.contrib.auth.models import User
-from django.contrib import messages
-from services import ReviewForm
-from django.core.mail import send_mail
 from config import email_host_user
+from django.contrib import messages
+from django.contrib.auth import login
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from haystack.generic_views import SearchView
 from haystack.query import SearchQuerySet
-import uuid
-from django.contrib.auth import login
+from services import (Cart, ClientForm, ReviewForm, get_subcategories_cargo,
+                      get_subcategories_passenger)
+
+from .models import Car, Category, PaymentForm, Review
+
 
 class CarSearchView(SearchView):
     template_name = 'search/search.html'
@@ -23,14 +28,24 @@ class CarSearchView(SearchView):
     context_object_name = 'object_list'
     paginate_by = 20 
 
-def cars_categories_page(request):
 
+# django-admin makemessages -l ru
+# # отредактируйте файлы .po в папке locale/ru/LC_MESSAGES/
+# django-admin compilemessages
+
+from django.utils.translation import gettext as _
+
+
+
+def cars_categories_page(request):
+    message = _("Hello")
     cargo_cars = get_subcategories_cargo() 
     passenger_cars = get_subcategories_passenger() 
     return render(request, 'categories_cars.html', context={'cargo_cars': cargo_cars, 'passenger_cars': passenger_cars})
 
 
 def category_detail(request, category_id):
+    message = _("Hello")
     category = get_object_or_404(Category, id=category_id)
     subcategories = category.subcategories.all()
     category_ids = [category.id] + [sub.id for sub in subcategories]
@@ -46,7 +61,7 @@ def category_detail(request, category_id):
 
 
 def car_detail(request, pk):
-
+    message = _("Hello")
     car = get_object_or_404(Car, pk=pk)
     category = car.category
     form = ReviewForm()  
@@ -54,6 +69,7 @@ def car_detail(request, pk):
     return render(request, 'result_search_car.html', {'category': category, 'car': car,'form': form, 'reviews': reviews})
 
 def user_register(request):
+    message = _("Hello")
     if request.method == 'POST':
         form = ClientForm(request.POST)
         if form.is_valid():
@@ -94,6 +110,7 @@ def user_register(request):
 
 
 def cart_add(request, car_id):
+    message = _("Hello")
     car = get_object_or_404(Car, id=car_id)
     cart = Cart(request)
     cart.add(car=car, quantity=1)
@@ -106,6 +123,7 @@ def cart_add(request, car_id):
 
 
 def placing_order(request, car_id):
+    message = _("Hello")
     car = get_object_or_404(Car, pk=car_id)
     cart = Cart(request)
 
@@ -143,7 +161,7 @@ def placing_order(request, car_id):
 
 
 def delete_order(request, car_id):
-  
+    message = _("Hello")
     order = Cart(request)
     car = get_object_or_404(Car, id=car_id)
     order.remove(car)
@@ -151,6 +169,7 @@ def delete_order(request, car_id):
 
 
 def send_order(request, car_id):
+    message = _("Hello")
     car = get_object_or_404(Car, id=car_id)
     cart = Cart(request)
     total_price = cart.get_item_total_price(car)
@@ -178,24 +197,25 @@ def send_order(request, car_id):
     return redirect('registration', category_id=car.category.id)
 
 def cart_delete(request, car_id):
-  
+    message = _("Hello")
     cart = Cart(request)
     car = get_object_or_404(Car, id=car_id)
     cart.remove(car)
     return redirect('cart_detail')
 
 def cart_view(request):
-
+    message = _("Hello")
     cart = Cart(request)
     return render(request, 'cart.html', {'cart': cart})
 
 def cart_clear(request):
-    
+    message = _("Hello")
     cart = Cart(request)
     cart.clear()
     return redirect('cart_detail')
 
 def reviews_add(request, car_id):
+    message = _("Hello")
     car = get_object_or_404(Car, id=car_id)
 
     if request.method == 'POST':
@@ -235,5 +255,6 @@ def reviews_add(request, car_id):
 
 
 class Car_View(ModelViewSet):
+    message = _("Hello")
     queryset = Car.objects.all()
     serializer_class = CarSerializer
