@@ -35,13 +35,48 @@ msgstr ""
 
 #: .\templates\categories_cars.html:78
 
-msgid "Search car"
-msgstr "Пошук авто""
-
-
 #: .\templates\categories_cars.html:103
 msgid "Home"
 msgstr "Головна"
 
 msgid "Cargo Cars"
 msgstr "Вантажні автомобілі"
+
+msgid "Search car"
+msgstr "Пошук авто"
+
+msgid "Passenger Cars"
+msgstr "Легкові автомобілі"
+
+msgid "Select a Category"
+msgstr "Виберіть категорію"
+
+msgid "All rights reserved"
+msgstr "Всі права захищені"
+
+msgid "Car Categories"
+msgstr "Категорії авто"
+
+msgid "Login with Facebook"
+msgstr "Увійти через Facebook"
+
+msgid "Login with Twitter"
+msgstr "Увійти через Twitter"
+
+msgid "Login with Github"
+msgstr "Увійти через Github"
+
+msgid "Contacts"
+msgstr "Контакти"
+
+msgid "Registration"
+msgstr "Реєстрація"
+
+msgid "Cart"
+msgstr "Кошик"
+
+msgid "Login"
+msgstr "Вхід"
+
+msgid "Logout"
+msgstr "Вихід"
