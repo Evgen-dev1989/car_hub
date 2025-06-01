@@ -36,13 +36,17 @@ class CarSearchView(SearchView):
 from django.utils.translation import gettext as _
 
 
+from django.utils import translation
 
 def cars_categories_page(request):
-    message = _("Hello")
-    cargo_cars = get_subcategories_cargo() 
-    passenger_cars = get_subcategories_passenger() 
-    return render(request, 'categories_cars.html', context={'cargo_cars': cargo_cars, 'passenger_cars': passenger_cars})
-
+    user_language = request.LANGUAGE_CODE
+    translation.activate(user_language)
+    cargo_cars = get_subcategories_cargo()
+    passenger_cars = get_subcategories_passenger()
+    return render(request, 'categories_cars.html', context={
+        'cargo_cars': cargo_cars,
+        'passenger_cars': passenger_cars
+    })
 
 def category_detail(request, category_id):
     message = _("Hello")

@@ -197,17 +197,16 @@ class CustomLoginView(auth_views.LoginView):
         return super().form_valid(form)
 
 def get_subcategories_passenger():
-    passenger_car = Category.objects.filter(name="passenger car").first()  
+    passenger_car = Category.objects.filter(name_en="passenger car").first()
     if passenger_car:
-        return passenger_car.subcategories.all() 
+        return passenger_car.subcategories.all()
     return []
 
 def get_subcategories_cargo():
-    cargo_car = Category.objects.filter(name="cargo car").first()  
+    cargo_car = Category.objects.filter(name_en="cargo car").first()
     if cargo_car:
-        return cargo_car.subcategories.all() 
+        return cargo_car.subcategories.all()
     return []
-
 
 
 @receiver(post_save, sender=User)
