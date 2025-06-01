@@ -79,23 +79,14 @@ msgstr "Вход"
 msgid "Logout"
 msgstr "Выход"
 
-msgid "trans "Select the category of cars you are interested in"
+msgid "Select the category of cars you are interested in"
 msgstr "Выберете интересующую категорию машин"
-
-msgid "Your Cart"
-msgstr "Ваша корзина"
-
-
-msgid "Your Cart"
-msgstr "Ваша корзина"
 
 msgid "Remove"
 msgstr "Удалить"
 
 msgid "Go placing  an order"
 msgstr "Оформить заказ"
-
-
 
 msgid "Your cart is empty"
 msgstr "Ваша корзина пустая"
@@ -139,6 +130,9 @@ msgstr "Почта"
 
 msgid "Register"
 msgstr "Зарегистрироваться"
+
+
+
 
 
 

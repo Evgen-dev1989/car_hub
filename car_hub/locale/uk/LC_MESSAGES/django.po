@@ -84,8 +84,9 @@ msgstr "Вхід"
 msgid "Logout"
 msgstr "Вихід"
 
-msgid "trans \"Select the category of cars you are interested in\""
+msgid "Select the category of cars you are interested in"
 msgstr "Оберіть категорію автомобілів, яка вас цікавить"
+
 
 msgid "Your Cart"
 msgstr "Ваш кошик"
@@ -96,8 +97,6 @@ msgstr "Видалити"
 msgid "Go placing  an order"
 msgstr "Оформити замовлення"
 
-msgid "Your cart is empty"
-msgstr "Ваш кошик порожній"
 
 msgid "Clear Cart"
 msgstr "Очистити кошик"
