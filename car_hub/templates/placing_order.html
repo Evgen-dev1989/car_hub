@@ -1,69 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart - Car Hub</title>
-    <link rel="alternate" type="application/rss+xml" title="Car Hub RSS Feed" href="{% url 'rss_feed' %}">
+    {% load i18n %}
+    <title>{% trans "Placing an order" %} - Car Hub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
         }
         header, footer {
             background-color: #343a40;
             color: white;
-            padding: 15px 0;
+            padding: 20px 0;
         }
         header h2, footer p {
             margin: 0;
         }
-        .container {
-            margin-top: 50px;
+        .main-container {
+            max-width: 1100px;
+            margin: 40px auto 0 auto;
+            padding: 30px 20px 40px 20px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+        .social-btns {
+            margin-bottom: 20px;
+        }
+        .social-btns a {
+            margin: 0 5px 10px 0;
+        }
+        .language-form {
+            margin-bottom: 20px;
+        }
+        nav {
+            margin-bottom: 20px;
+        }
+        nav a, nav form {
+            margin-right: 10px;
+        }
+        .search-form {
+            max-width: 500px;
+            margin: 0 auto 30px auto;
+        }
+        .card {
+            min-height: 320px;
+            margin-bottom: 30px;
+        }
+        .card-header {
+            padding: 16px 24px;
+        }
+        .dropdown-menu {
+            width: 100%;
+        }
+        @media (max-width: 900px) {
+            .main-container {
+                max-width: 98vw;
+                padding: 10px;
+            }
+            .card {
+                min-height: 220px;
+            }
         }
     </style>
 </head>
 <body>
     <header class="text-center">
-        <h2>Car Hub</h2>
-        <nav>
-            <a href="{% url 'car' %}" class="text-white me-3">Home</a>
-            <a href="{% url 'contacts' %}" class="text-white me-3">Contacts</a>
-            <a href="{% url 'user_register' %}" class="text-white me-3">Registration</a>
-            <a href="{% url 'cart_detail' %}" class="text-white">Cart</a>
-            <a href="{% url 'rss_feed' %}" class="text-white">RSS Feed</a>
-            {% if not request.user.is_authenticated %}
-             <a href="{% url 'login' %}" class="text-white">Login</a>
-            {% endif %}
-            <form method="post" action="{% url 'logout' %}" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-link text-white" style="padding:0;">Logout</button>
+      
+            <div class="social-btns">
+                <a class="btn btn-success" href="{% url 'social:begin' 'facebook' %}" role="button">{% trans "Login with Facebook" %}</a>
+                <a class="btn btn-success" href="{% url 'social:begin' 'twitter' %}" role="button">{% trans "Login with Twitter" %}</a>
+                <a class="btn btn-success" href="{% url 'social:begin' 'google-oauth2' %}" role="button">Login with Google</a>
+                <a class="btn btn-success" href="{% url 'social:begin' 'github' %}" role="button">{% trans "Login with Github" %}</a>
+            </div>
+            <form action="{% url 'set_language' %}" method="post" class="language-form">
+                {% csrf_token %}
+                <select name="language">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% for lang in LANGUAGES %}
+                        <option value="{{ lang.0 }}"{% if lang.0 == LANGUAGE_CODE %} selected{% endif %}>{{ lang.1 }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Change language">
             </form>
-            
-        </nav>
-        <form class="d-flex justify-content-center mt-3" method="get" action="{% url 'haystack_search' %}" style="max-width: 500px; margin: 0 auto;">
-        <input class="form-control me-2" type="text" name="q" value="{{ request.GET.q }}" placeholder="Search cars..." aria-label="Search">
-        <button class="btn btn-outline-light" type="submit">Search car</button>
-    </header>
-
-    {{ request.user.is_authenticated }}
-    {{ request.user }}
-
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li class="{{ message.tags }}">{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-
-        <div class="container">
-    <a class="btn btn-success" href="{% url 'social:begin' 'facebook' %}" role="button">Login with Facebook</a>
-    <a class="btn btn-success" href="{% url 'social:begin' 'twitter' %}" role="button">Login with Twitter</a>
-    <a class="btn btn-success" href="{% url 'social:begin' 'google-oauth2' %}" role="button">Login with Google</a>
-    <a class="btn btn-success" href="{% url 'social:begin' 'github' %}" role="button">Login with Github</a>
-        <h3>Placing an order</h3>
+            <h2>Car Hub</h2>
+            <nav>
+                <a href="{% url 'car' %}" class="text-white me-3">{% trans "Home" %}</a>
+                <a href="{% url 'contacts' %}" class="text-white me-3">{% trans "Contacts" %}</a>
+                <a href="{% url 'user_register' %}" class="text-white me-3">{% trans "Registration" %}</a>
+                <a href="{% url 'cart_detail' %}" class="text-white">{% trans "Cart" %}</a>
+                {% if not request.user.is_authenticated %}
+                    <a href="{% url 'login' %}" class="text-white">{% trans "Login" %}</a>
+                {% endif %}
+                <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link text-white" style="padding:0;">{% trans "Logout" %}</button>
+                </form>
+            </nav>
+            <form class="d-flex justify-content-center search-form" method="get" action="{% url 'haystack_search' %}">
+                <input class="form-control me-2" type="text" name="q" value="{{ request.GET.q }}" placeholder="Search cars..." aria-label="Search">
+                <button class="btn btn-outline-light" type="submit">{% trans "Search car" %}</button>
+            </form>
+            <h1 class="text-center mt-4">{% trans "Select the category of cars you are interested in" %}</h1>
+            <br/>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% load i18n %}
+    <h3>{% trans "Placing an order" %}</h3>
         {% if cart %}
             <ul class="list-group">
                 {% for item in cart %}
@@ -78,19 +132,19 @@
                 <form method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <a class="btn btn-danger" href="{% url 'delete_order' item.car.id %}">Remove order</a>
-                    <a class="btn btn-success" href="{% url 'send_order' item.car.id %}" role="button">Buy</a>
+                    <a class="btn btn-danger" href="{% url 'delete_order' item.car.id %}">{% trans "Remove" %}</a>
+                    <a class="btn btn-success" href="{% url 'send_order' item.car.id %}" role="button">{% trans "Buy" %}</a>
                     {% endfor %}
                 </form>
             </li>
         {% else %}
-            <p>Your order is empty.</p>
+            <p>{% trans "Your cart is empty" %}.</p>
         {% endif %}
     </div>
 
 
     <footer class="text-center mt-5">
-        <p>&copy; 2025 Car Hub. All rights reserved.</p>
+        <p>&copy; 2025 Car Hub. {% trans "All rights reserved" %}.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

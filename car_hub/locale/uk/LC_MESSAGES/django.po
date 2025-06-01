@@ -54,6 +54,9 @@ msgstr "Виберіть категорію"
 msgid "All rights reserved"
 msgstr "Всі права захищені"
 
+msgid "Cars"
+msgstr "Автомобілі"
+
 msgid "Car Categories"
 msgstr "Категорії авто"
 
@@ -80,3 +83,57 @@ msgstr "Вхід"
 
 msgid "Logout"
 msgstr "Вихід"
+
+msgid "trans \"Select the category of cars you are interested in\""
+msgstr "Оберіть категорію автомобілів, яка вас цікавить"
+
+msgid "Your Cart"
+msgstr "Ваш кошик"
+
+msgid "Remove"
+msgstr "Видалити"
+
+msgid "Go placing  an order"
+msgstr "Оформити замовлення"
+
+msgid "Your cart is empty"
+msgstr "Ваш кошик порожній"
+
+msgid "Clear Cart"
+msgstr "Очистити кошик"
+
+msgid "Category"
+msgstr "Категорія"
+
+msgid "review"
+msgstr "Відгук"
+
+msgid "client"
+msgstr "Клієнт"
+
+msgid "No reviews"
+msgstr "Немає відгуків"
+
+msgid "Contact Us"
+msgstr "Наші контакти"
+
+msgid "If you have any questions, feel free to reach out to us!"
+msgstr "Якщо у вас є питання, звертайтеся до нас!"
+
+msgid "Address"
+msgstr "Адреса"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Placing an order"
+msgstr "Оформлення замовлення"
+
+msgid "Buy"
+msgstr "Купити"
+
+msgid "Email"
+msgstr "Пошта"
+
+msgid "Register"
+msgstr "Зареєструватися"

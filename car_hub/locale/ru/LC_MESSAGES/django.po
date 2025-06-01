@@ -49,6 +49,9 @@ msgstr "Выбор категории"
 msgid "All rights reserved"
 msgstr "Все права защищены"
 
+msgid "Cars"
+msgstr "Машины"
+
 msgid "Car Categories"
 msgstr "Категории машни"
 
@@ -92,26 +95,51 @@ msgstr "Удалить"
 msgid "Go placing  an order"
 msgstr "Оформить заказ"
 
-msgid "Go placing  an order"
-msgstr "Оформить заказ"
+
 
 msgid "Your cart is empty"
 msgstr "Ваша корзина пустая"
 
 msgid "Clear Cart"
-msgstr "очистить корзину"
+msgstr "Очистить корзину"
 
 msgid "Category"
 msgstr "Категория"
 
-msgid "Clear Cart"
-msgstr "очистить корзину"
+msgid "review"
+msgstr "Отзыв"
 
-msgid "Clear Cart"
-msgstr "очистить корзину"
+msgid "client"
+msgstr "Клиент"
 
-msgid "Clear Cart"
-msgstr "очистить корзину"
+msgid "No reviews"
+msgstr "Нет отзывов"
+
+
+msgid "Contact Us"
+msgstr "Наши контакты"
+
+msgid "If you have any questions, feel free to reach out to us!"
+msgstr "Если у вас возникли вопросы, не стесняйтесь обращаться к нам"
+
+msgid "Address"
+msgstr "Адрес"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Placing an order"
+msgstr "Оформление заказа"
+
+msgid "Buy"
+msgstr "Купить"
+
+msgid "Email"
+msgstr "Почта"
+
+msgid "Register"
+msgstr "Зарегистрироваться"
+
 
 
 
