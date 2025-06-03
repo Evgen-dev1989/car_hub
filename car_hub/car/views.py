@@ -34,7 +34,7 @@ class CarSearchView(SearchView):
 # django-admin compilemessages
 
 from django.utils.translation import gettext as _
-
+from tasks import send_inform_text
 
 from django.utils import translation
 
@@ -180,25 +180,14 @@ def send_order(request, car_id):
 
     if request.user.is_authenticated:
         try:
-            client = Client.objects.get(user=request.user)
-            send_mail(
-                subject='Purchase Confirmation',
-                message=(
-                    f'Dear {client.user.username},\n\n'
-                    f'You have successfully completed the purchase of "{car.brand} {car.model}".\n'
-                    f'Total price: {total_price}\n'
-                    'Our manager will contact you shortly.\n\nThank you for choosing us!'
-                ),
-                from_email=email_host_user,
-                recipient_list=[client.email],
-                fail_silently=False,
-            )
+            send_inform_text.delay(request.user.id, car_id, total_price)
             print("Thank you for your purchase, we sent you an email")
         except Client.DoesNotExist:
             print("Client not found. Email not sent.")
         messages.success(request, "Your review has been successfully added.")
         return redirect('car', category_id=car.category.id)
     return redirect('registration', category_id=car.category.id)
+
 
 def cart_delete(request, car_id):
     message = _("Hello")
