@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from config import email_host_user, password
+from config import email_host_user, password, stripe_secret_key
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,6 +30,9 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+STRIPE_SECRET_KEY = stripe_secret_key
+STRIPE_PUBLISHABLE_KEY = 'pk_test_...'
 
 LANGUAGE_CODE = 'en-us'
 

@@ -7,19 +7,56 @@ from rest_framework.viewsets import ModelViewSet
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import uuid
 
+
+import stripe
 from api.serializers_car import CarSerializer
 from client.models import Client
-from config import email_host_user
+from config import email_host_user, stripe_secret_key
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.models import User
-from django.core.mail import send_mail
+from django.utils import translation
+from django.utils.translation import gettext as _
 from haystack.generic_views import SearchView
 from haystack.query import SearchQuerySet
 from services import (Cart, ClientForm, ReviewForm, get_subcategories_cargo,
                       get_subcategories_passenger)
+from .tasks import send_inform_text
 
-from .models import Car, Category, PaymentForm, Review
+from .models import Car, Category, PaymentForm, Review, Payment
+
+# django-admin makemessages -l ru
+# # отредактируйте файлы .po в папке locale/ru/LC_MESSAGES/
+# django-admin compilemessages
+
+
+
+
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+def create_checkout_session(request, payment_id):
+    payment = Payment.objects.get(transaction_id=payment_id)
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=[{
+            'price_data': {
+                'currency': payment.currency.lower(),
+                'product_data': {
+                    'name': f'Оплата заказа #{payment.id}',
+                },
+                'unit_amount': int(payment.amount * 100),  
+            },
+            'quantity': 1,
+        }],
+        mode='payment',
+        success_url=request.build_absolute_uri('/payment/success/'),
+        cancel_url=request.build_absolute_uri('/payment/cancel/'),
+        customer_email=payment.client.user.email,
+    )
+    return redirect(session.url)
+
 
 
 class CarSearchView(SearchView):
@@ -28,15 +65,6 @@ class CarSearchView(SearchView):
     context_object_name = 'object_list'
     paginate_by = 20 
 
-
-# django-admin makemessages -l ru
-# # отредактируйте файлы .po в папке locale/ru/LC_MESSAGES/
-# django-admin compilemessages
-
-from django.utils.translation import gettext as _
-from tasks import send_inform_text
-
-from django.utils import translation
 
 def cars_categories_page(request):
     user_language = request.LANGUAGE_CODE

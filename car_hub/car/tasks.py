@@ -8,7 +8,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from client.models import Client
 from config import email_host_user
-from django.contrib import messages
 from django.core.mail import send_mail
 
 from .models import Car

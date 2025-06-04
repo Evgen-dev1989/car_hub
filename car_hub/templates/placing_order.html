@@ -133,7 +133,8 @@
                     {% csrf_token %}
                     {{ form.as_p }}
                     <a class="btn btn-danger" href="{% url 'delete_order' item.car.id %}">{% trans "Remove" %}</a>
-                    <a class="btn btn-success" href="{% url 'send_order' item.car.id %}" role="button">{% trans "Buy" %}</a>
+                    <a class="btn btn-success" href="{% url 'send_order' item.car.id %}" role="place an order with the help of a manager">{% trans "Buy" %}</a>
+                    <a href="{% url 'create_checkout_session' payment.id %}" class="btn btn-success">pay online</a>
                     {% endfor %}
                 </form>
             </li>

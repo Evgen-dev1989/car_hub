@@ -4,7 +4,6 @@ from django.contrib.syndication.views import Feed
 from django.urls import reverse
 from django import forms
 from django.utils.translation import gettext as _
-
 class Category(models.Model):
 
     name = models.CharField(max_length=100)
