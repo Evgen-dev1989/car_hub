@@ -118,30 +118,27 @@
             {% endif %}
         {% load i18n %}
     <h3>{% trans "Placing an order" %}</h3>
-        {% if cart %}
+           {% if cart %}
             <ul class="list-group">
                 {% for item in cart %}
-                <li class="list-group-item">
-                    {{ item.car.brand }} {{ item.car.model }} - {{ item.quantity }} шт.
-                    ({{ item.total_price }} ₽)
-
-                </li>
+                    <li class="list-group-item">
+                        {{ item.car.brand }} {{ item.car.model }} - {{ item.quantity }} шт.
+                        ({{ item.total_price }} ₽)
+                        <a class="btn btn-danger" href="{% url 'delete_order' item.car.id %}">{% trans "Remove" %}</a>
+                        <a class="btn btn-success" href="{% url 'send_order' item.car.id %}" role="place an order with the help of a manager">{% trans "Buy" %}</a>
+                    </li>
+                {% endfor %}
             </ul>
-            <li class="list-group-item">
-                
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <a class="btn btn-danger" href="{% url 'delete_order' item.car.id %}">{% trans "Remove" %}</a>
-                    <a class="btn btn-success" href="{% url 'send_order' item.car.id %}" role="place an order with the help of a manager">{% trans "Buy" %}</a>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% if payment and payment.id %}
                     <a href="{% url 'create_checkout_session' payment.id %}" class="btn btn-success">pay online</a>
-                    {% endfor %}
-                </form>
-            </li>
+                {% endif %}
+            </form>
         {% else %}
             <p>{% trans "Your cart is empty" %}.</p>
         {% endif %}
-    </div>
 
 
     <footer class="text-center mt-5">

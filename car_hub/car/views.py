@@ -169,7 +169,7 @@ def placing_order(request, car_id):
     except Client.DoesNotExist:
         messages.error(request, "Client not found. Please register.")
         return redirect('user_register')
-
+    payment = None 
     if request.method == 'POST':
         form = PaymentForm(request.POST)
         if form.is_valid():
@@ -189,6 +189,7 @@ def placing_order(request, car_id):
     return render(request, 'placing_order.html', {
         'form': form,
         'cart': cart,
+        'payment': payment,
     })
 
 
