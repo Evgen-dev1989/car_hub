@@ -116,9 +116,13 @@
                     {% endfor %}
                 </ul>
             {% endif %}
+
         {% load i18n %}
-    <h3>{% trans "Placing an order" %}</h3>
-           {% if cart %}
+        {% if payment and payment.id %}
+        <p>{% trans "Order placed successfully!" %}</p>
+        <a href="{% url 'create_checkout_session' payment.id %}" class="btn btn-success">pay online</a>
+    {% else %}
+        {% if cart %}
             <ul class="list-group">
                 {% for item in cart %}
                     <li class="list-group-item">
@@ -129,16 +133,19 @@
                     </li>
                 {% endfor %}
             </ul>
-            <form method="post">
+                        <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                {% if payment and payment.id %}
-                    <a href="{% url 'create_checkout_session' payment.id %}" class="btn btn-success">pay online</a>
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        {{ form.errors }}
+                    </div>
                 {% endif %}
             </form>
         {% else %}
             <p>{% trans "Your cart is empty" %}.</p>
         {% endif %}
+    {% endif %}
 
 
     <footer class="text-center mt-5">

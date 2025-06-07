@@ -159,7 +159,6 @@ def placing_order(request, car_id):
     car = get_object_or_404(Car, pk=car_id)
     cart = Cart(request)
 
-
     if not request.user.is_authenticated:
         messages.error(request, "You need to be logged in to place an order.")
         return redirect('login')
@@ -182,14 +181,19 @@ def placing_order(request, car_id):
             payment.car = car
             payment.save()
             messages.success(request, "Order placed successfully!")
-            return redirect('cart_detail')
+            print('PAYMENT:', payment, payment.id if payment else None)
+            return render(request, 'placing_order.html', {
+                'form': form,
+                'cart': cart,
+                'payment': payment,
+    })
     else:
         form = PaymentForm()
-
-    return render(request, 'placing_order.html', {
-        'form': form,
-        'cart': cart,
-        'payment': payment,
+        print('PAYMENT:', payment, payment.id if payment else None)
+        return render(request, 'placing_order.html', {
+                'form': form,
+                'cart': cart,
+                'payment': payment,
     })
 
 

@@ -129,7 +129,10 @@
                 <li class="list-group-item">
                     {{ item.car.brand }} {{ item.car.model }} - {{ item.quantity }} шт.
                     ({{ item.total_price }} ₽)
-                    <a class="btn btn-success" href="{% url 'placing_order' item.car.id %}" role="button">{% trans "Go placing  an order" %}</a>
+                    <form method="post" action="{% url 'placing_order' item.car.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success">{% trans "Go placing  an order" %}</button>
+                    </form>
                     <a class="btn btn-danger" href="{% url 'cart_remove' item.car.id %}">{% trans "Remove" %}</a>
                 </li>
                 {% endfor %}
