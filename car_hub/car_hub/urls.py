@@ -1,7 +1,8 @@
 from car.views import (Car_View, CarSearchView, car_detail,
                        cars_categories_page, cart_add, cart_clear, cart_delete,
                        send_order, cart_view, category_detail,
-                       placing_order, reviews_add, user_register, delete_order, create_checkout_session)
+                       placing_order, reviews_add, user_register, delete_order, create_checkout_session,
+                       pay_online)
 from client.views import all_clients, delete_all_users
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
@@ -22,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #path('client/', include('client.urls')),
     path('payment/<int:payment_id>/', create_checkout_session, name='create_checkout_session'),
+    path('payment/pay_online/<int:payment_id>/', pay_online, name='pay_online'),
     path('social-auth/', include('social_django.urls', namespace='social')),
     path('i18n/', include('django.conf.urls.i18n')),
     path('car/', cars_categories_page, name='car'),
