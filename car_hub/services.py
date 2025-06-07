@@ -20,11 +20,6 @@ from django.urls import path
 from car.models import Car
 from django.contrib.sitemaps import Sitemap
 
-    # <form method="post">
-    #                 {% csrf_token %}
-    #                 {{ form.as_p }}
-    #             </form>
-
 class CarSitemap(Sitemap):
     changefreq = "daily"
     priority = 0.8

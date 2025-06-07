@@ -107,7 +107,7 @@
                 <input class="form-control me-2" type="text" name="q" value="{{ request.GET.q }}" placeholder="Search cars..." aria-label="Search">
                 <button class="btn btn-outline-light" type="submit">{% trans "Search car" %}</button>
             </form>
-            <h1 class="text-center mt-4">{% trans "Select the category of cars you are interested in" %}</h1>
+           
             <br/>
             {% if messages %}
                 <ul class="messages">
@@ -118,9 +118,8 @@
             {% endif %}
 
         {% load i18n %}
-        {% if payment and payment.id %}
-        <p>{% trans "Order placed successfully!" %}</p>
-        <a href="{% url 'create_checkout_session' payment.id %}" class="btn btn-success">pay online</a>
+
+        
     {% else %}
         {% if cart %}
             <ul class="list-group">
@@ -129,12 +128,7 @@
                         {{ item.car.brand }} {{ item.car.model }} - {{ item.quantity }} шт.
                         ({{ item.total_price }} ₽)
                         <a class="btn btn-danger" href="{% url 'delete_order' item.car.id %}">{% trans "Remove" %}</a>
-                        <a class="btn btn-success" href="{% url 'send_order' item.car.id %}" role="place an order with the help of a manager">{% trans "Buy" %}</a>
-
-                        <form method="post" action="{% url 'pay_online' item.car.id %}" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-success">{% trans "Go placing  an order" %}</button>
-                        </form>
+                     
                     </li>
                 {% endfor %}
             </ul>

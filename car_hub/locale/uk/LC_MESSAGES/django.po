@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-31 10:42+0300\n"
+"POT-Creation-Date: 2025-06-07 17:39+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,119 +20,199 @@ msgstr ""
 "11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
 "100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
 "(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
-#: .\car\models.py:9 .\car\models.py:20 .\car\models.py:21 .\car\models.py:36
-#: .\car\models.py:45 .\car\models.py:50 .\car\models.py:91
-#: .\client\models.py:17
+
+#: .\car\models.py:20 .\car\models.py:21 .\car\models.py:36 .\car\models.py:45
+#: .\car\models.py:50 .\car\models.py:91 .\client\models.py:17
 msgid "Name"
 msgstr ""
 
-#: .\car\views.py:41 .\car\views.py:48 .\car\views.py:64 .\car\views.py:72
-#: .\car\views.py:113 .\car\views.py:126 .\car\views.py:164 .\car\views.py:172
-#: .\car\views.py:200 .\car\views.py:207 .\car\views.py:212 .\car\views.py:218
-#: .\car\views.py:258
+#: .\car\views.py:80 .\car\views.py:96 .\car\views.py:104 .\car\views.py:145
+#: .\car\views.py:158 .\car\views.py:199 .\car\views.py:241 .\car\views.py:249
+#: .\car\views.py:266 .\car\views.py:273 .\car\views.py:278 .\car\views.py:284
+#: .\car\views.py:324
 msgid "Hello"
 msgstr ""
 
-#: .\templates\categories_cars.html:78
-
-#: .\templates\categories_cars.html:103
-msgid "Home"
-msgstr "Головна"
-
-msgid "Cargo Cars"
-msgstr "Вантажні автомобілі"
-
-msgid "Search car"
-msgstr "Пошук авто"
-
-msgid "Passenger Cars"
-msgstr "Легкові автомобілі"
-
-msgid "Select a Category"
-msgstr "Виберіть категорію"
-
-msgid "All rights reserved"
-msgstr "Всі права захищені"
-
-msgid "Cars"
-msgstr "Автомобілі"
-
-msgid "Car Categories"
-msgstr "Категорії авто"
-
-msgid "Login with Facebook"
-msgstr "Увійти через Facebook"
-
-msgid "Login with Twitter"
-msgstr "Увійти через Twitter"
-
-msgid "Login with Github"
-msgstr "Увійти через Github"
-
-msgid "Contacts"
-msgstr "Контакти"
-
-msgid "Registration"
-msgstr "Реєстрація"
-
+#: .\templates\cart.html:7 .\templates\cart.html:97
+#: .\templates\categories_cars.html:97 .\templates\category_detail.html:97
+#: .\templates\contacts.html:97 .\templates\login.html:97
+#: .\templates\pay_online.html:97 .\templates\placing_order.html:97
+#: .\templates\registration.html:97
 msgid "Cart"
 msgstr "Кошик"
 
+#: .\templates\cart.html:76 .\templates\categories_cars.html:76
+#: .\templates\category_detail.html:76 .\templates\contacts.html:76
+#: .\templates\login.html:76 .\templates\pay_online.html:76
+#: .\templates\placing_order.html:76 .\templates\registration.html:76
+msgid "Login with Facebook"
+msgstr "Увійти через Facebook"
+
+#: .\templates\cart.html:77 .\templates\categories_cars.html:77
+#: .\templates\category_detail.html:77 .\templates\contacts.html:77
+#: .\templates\login.html:77 .\templates\pay_online.html:77
+#: .\templates\placing_order.html:77 .\templates\registration.html:77
+msgid "Login with Twitter"
+msgstr "Увійти через Twitter"
+
+#: .\templates\cart.html:79 .\templates\categories_cars.html:79
+#: .\templates\category_detail.html:79 .\templates\contacts.html:79
+#: .\templates\login.html:79 .\templates\pay_online.html:79
+#: .\templates\placing_order.html:79 .\templates\registration.html:79
+msgid "Login with Github"
+msgstr "Увійти через Github"
+
+#: .\templates\cart.html:94 .\templates\categories_cars.html:94
+#: .\templates\category_detail.html:94 .\templates\contacts.html:94
+#: .\templates\login.html:94 .\templates\pay_online.html:94
+#: .\templates\placing_order.html:94 .\templates\registration.html:94
+msgid "Home"
+msgstr "Головна"
+
+#: .\templates\cart.html:95 .\templates\categories_cars.html:95
+#: .\templates\category_detail.html:95 .\templates\contacts.html:7
+#: .\templates\contacts.html:95 .\templates\login.html:95
+#: .\templates\pay_online.html:95 .\templates\placing_order.html:95
+#: .\templates\registration.html:95
+msgid "Contacts"
+msgstr "Контакти"
+
+#: .\templates\cart.html:96 .\templates\categories_cars.html:96
+#: .\templates\category_detail.html:96 .\templates\contacts.html:96
+#: .\templates\login.html:96 .\templates\pay_online.html:96
+#: .\templates\placing_order.html:96 .\templates\registration.html:7
+#: .\templates\registration.html:96
+msgid "Registration"
+msgstr "Реєстрація"
+
+#: .\templates\cart.html:99 .\templates\categories_cars.html:99
+#: .\templates\category_detail.html:99 .\templates\contacts.html:99
+#: .\templates\login.html:7 .\templates\login.html:99
+#: .\templates\login.html:125 .\templates\pay_online.html:99
+#: .\templates\placing_order.html:99 .\templates\registration.html:99
 msgid "Login"
 msgstr "Вхід"
 
+#: .\templates\cart.html:103 .\templates\categories_cars.html:103
+#: .\templates\category_detail.html:103 .\templates\contacts.html:103
+#: .\templates\login.html:103 .\templates\pay_online.html:103
+#: .\templates\placing_order.html:103 .\templates\registration.html:103
 msgid "Logout"
 msgstr "Вихід"
 
-msgid "Select the category of cars you are interested in"
-msgstr "Оберіть категорію автомобілів, яка вас цікавить"
+#: .\templates\cart.html:108 .\templates\categories_cars.html:108
+#: .\templates\category_detail.html:108 .\templates\contacts.html:108
+#: .\templates\login.html:108 .\templates\pay_online.html:108
+#: .\templates\placing_order.html:108 .\templates\registration.html:108
+msgid "Search car"
+msgstr "Пошук авто"
 
-
+#: .\templates\cart.html:125
 msgid "Your Cart"
 msgstr "Ваш кошик"
 
-msgid "Remove"
-msgstr "Видалити"
-
+#: .\templates\cart.html:132 .\templates\pay_online.html:136
 msgid "Go placing  an order"
 msgstr "Оформити замовлення"
 
+#: .\templates\cart.html:133 .\templates\pay_online.html:131
+#: .\templates\placing_order.html:131
+msgid "Remove"
+msgstr "Видалити"
 
+#: .\templates\cart.html:139
 msgid "Clear Cart"
 msgstr "Очистити кошик"
 
+#: .\templates\cart.html:142 .\templates\pay_online.html:151
+#: .\templates\placing_order.html:143
+msgid "Your cart is empty"
+msgstr ""
+
+#: .\templates\cart.html:147 .\templates\categories_cars.html:171
+#: .\templates\contacts.html:132 .\templates\login.html:134
+#: .\templates\pay_online.html:157 .\templates\placing_order.html:149
+#: .\templates\registration.html:131
+msgid "All rights reserved"
+msgstr "Всі права захищені"
+
+#: .\templates\categories_cars.html:7
+msgid "Car Categories"
+msgstr "Категорії авто"
+
+#: .\templates\categories_cars.html:110 .\templates\pay_online.html:110
+#: .\templates\placing_order.html:110
+msgid "Select the category of cars you are interested in"
+msgstr "Оберіть категорію автомобілів, яка вас цікавить"
+
+#: .\templates\categories_cars.html:126
+msgid "Cargo Cars"
+msgstr "Вантажні автомобілі"
+
+#: .\templates\categories_cars.html:131 .\templates\categories_cars.html:152
+msgid "Select a Category"
+msgstr "Виберіть категорію"
+
+#: .\templates\categories_cars.html:147
+msgid "Passenger Cars"
+msgstr "Легкові автомобілі"
+
+#: .\templates\category_detail.html:7
+msgid "Cars"
+msgstr "Автомобілі"
+
+#: .\templates\category_detail.html:121
 msgid "Category"
 msgstr "Категорія"
 
-msgid "review"
-msgstr "Відгук"
-
+#: .\templates\category_detail.html:139
 msgid "client"
 msgstr "Клієнт"
 
+#: .\templates\category_detail.html:140
+msgid "review"
+msgstr "Відгук"
+
+#: .\templates\category_detail.html:143
 msgid "No reviews"
 msgstr "Немає відгуків"
 
+#: .\templates\contacts.html:122
 msgid "Contact Us"
 msgstr "Наші контакти"
 
+#: .\templates\contacts.html:123
 msgid "If you have any questions, feel free to reach out to us!"
 msgstr "Якщо у вас є питання, звертайтеся до нас!"
 
+#: .\templates\contacts.html:125
 msgid "Address"
 msgstr "Адреса"
 
+#: .\templates\contacts.html:126
 msgid "Phone"
 msgstr "Телефон"
 
-msgid "Placing an order"
-msgstr "Оформлення замовлення"
-
-msgid "Buy"
-msgstr "Купити"
-
+#: .\templates\contacts.html:127
 msgid "Email"
 msgstr "Пошта"
 
+#: .\templates\pay_online.html:7 .\templates\placing_order.html:7
+msgid "Placing an order"
+msgstr "Оформлення замовлення"
+
+#: .\templates\pay_online.html:122 .\templates\placing_order.html:122
+msgid "Order placed successfully!"
+msgstr ""
+
+#: .\templates\pay_online.html:132 .\templates\placing_order.html:132
+msgid "Buy"
+msgstr "Купити"
+
+#: .\templates\placing_order.html:136
+msgid "Pay online"
+msgstr "Сплатити онлайн"
+
+#: .\templates\registration.html:122 .\templates\registration.html:126
 msgid "Register"
 msgstr "Зареєструватися"

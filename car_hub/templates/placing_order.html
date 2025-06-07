@@ -120,7 +120,6 @@
         {% load i18n %}
         {% if payment and payment.id %}
         <p>{% trans "Order placed successfully!" %}</p>
-        <a href="{% url 'create_checkout_session' payment.id %}" class="btn btn-success">pay online</a>
     {% else %}
         {% if cart %}
             <ul class="list-group">
@@ -133,20 +132,12 @@
 
                         <form method="post" action="{% url 'pay_online' item.car.id %}" style="display:inline;">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-success">{% trans "Go placing  an order" %}</button>
+                        <button type="submit" class="btn btn-success">{% trans "Pay online" %}</button>
                         </form>
                     </li>
                 {% endfor %}
             </ul>
-                        <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                {% if form.errors %}
-                    <div class="alert alert-danger">
-                        {{ form.errors }}
-                    </div>
-                {% endif %}
-            </form>
+
         {% else %}
             <p>{% trans "Your cart is empty" %}.</p>
         {% endif %}
