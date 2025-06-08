@@ -1,9 +1,11 @@
 from client.models import Client
-from django.db import models
-from django.contrib.syndication.views import Feed
-from django.urls import reverse
 from django import forms
+from django.contrib.syndication.views import Feed
+from django.db import models
+from django.urls import reverse
 from django.utils.translation import gettext as _
+
+
 class Category(models.Model):
 
     name = models.CharField(max_length=100)

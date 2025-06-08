@@ -33,7 +33,7 @@ from .models import Car, Category, PaymentForm, Review, Payment
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def create_checkout_session(request, payment_id):
-    payment = Payment.objects.get(transaction_id=payment_id)
+    payment = Payment.objects.get(id=payment_id)
     session = stripe.checkout.Session.create(
         payment_method_types=['card'],
         line_items=[{
@@ -55,17 +55,20 @@ def create_checkout_session(request, payment_id):
 
 
 def payment_success(request, payment_id):
-    payment = stripe.PaymentIntent.retrieve(payment_id)
-    if payment.status == 'succeeded':
-        payment.status = 'Completed'
-        payment.save()
-        messages.success(request, "Payment completed successfully!")
+
+    payment = get_object_or_404(Payment, id=payment_id)
+    payment.status = 'Completed'
+    payment.save()
+    messages.success(request, "Payment completed successfully!")
     return render(request, 'payment_success.html')
 
-def payment_cancel(request):
-    return render(request, 'payment_cancel.html')
+def payment_cancel(request, payment_id):
 
-
+    payment = get_object_or_404(Payment, id=payment_id)
+    payment.status = 'Failed'
+    payment.save()
+    messages.error(request, "Payment is Failed!")
+    return render(request, 'pay_online.html')
 
 
 class CarSearchView(SearchView):
