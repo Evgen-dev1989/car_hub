@@ -137,13 +137,23 @@
                     </li>
                 {% endfor %}
             </ul>
-
+                <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        {{ form.errors }}
+                    </div>
+                {% endif %}
+            </form>
+        
         {% else %}
             <p>{% trans "Your cart is empty" %}.</p>
         {% endif %}
     {% endif %}
-
-
+        {% if payment and payment.id %}
+            <a href="{% url 'pay_online' payment.id %}" class="btn btn-success">Pay online</a>
+        {% endif %}
     <footer class="text-center mt-5">
         <p>&copy; 2025 Car Hub. {% trans "All rights reserved" %}.</p>
     </footer>

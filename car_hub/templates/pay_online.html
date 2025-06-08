@@ -120,7 +120,7 @@
         {% load i18n %}
 
         
-    {% else %}
+ 
         {% if cart %}
             <ul class="list-group">
                 {% for item in cart %}
@@ -132,7 +132,7 @@
                     </li>
                 {% endfor %}
             </ul>
-                        <form method="post">
+            <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
                 {% if form.errors %}
@@ -144,8 +144,11 @@
         {% else %}
             <p>{% trans "Your cart is empty" %}.</p>
         {% endif %}
-    {% endif %}
 
+
+    {% if payment and payment.id %}
+    <a href="{% url 'create_checkout_session' payment.id %}" class="btn btn-success">Pay online</a>
+    {% endif %}
 
     <footer class="text-center mt-5">
         <p>&copy; 2025 Car Hub. {% trans "All rights reserved" %}.</p>

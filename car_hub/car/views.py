@@ -27,11 +27,7 @@ from .tasks import send_inform_text
 from .models import Car, Category, PaymentForm, Review, Payment
 
 # django-admin makemessages -l ru
-# # отредактируйте файлы .po в папке locale/ru/LC_MESSAGES/
 # django-admin compilemessages
-
-
-
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -44,7 +40,7 @@ def create_checkout_session(request, payment_id):
             'price_data': {
                 'currency': payment.currency.lower(),
                 'product_data': {
-                    'name': f'Оплата заказа #{payment.id}',
+                    'name': f'Payment for the order #{payment.id}',
                 },
                 'unit_amount': int(payment.amount * 100),  
             },
@@ -56,6 +52,19 @@ def create_checkout_session(request, payment_id):
         customer_email=payment.client.user.email,
     )
     return redirect(session.url)
+
+
+def payment_success(request, payment_id):
+    payment = stripe.PaymentIntent.retrieve(payment_id)
+    if payment.status == 'succeeded':
+        payment.status = 'Completed'
+        payment.save()
+        messages.success(request, "Payment completed successfully!")
+    return render(request, 'payment_success.html')
+
+def payment_cancel(request):
+    return render(request, 'payment_cancel.html')
+
 
 
 
@@ -184,6 +193,7 @@ def placing_order(request, car_id):
             return render(request, 'placing_order.html', {
                 'form': form,
                 'cart': cart,
+                'payment': payment
                
     })
     else:
@@ -192,37 +202,13 @@ def placing_order(request, car_id):
                 'form': form,
                 'cart': cart,})
     
-def pay_online(request, car_id):
-
-    message = _("Hello")
-    car = get_object_or_404(Car, pk=car_id)
+def pay_online(request, payment_id):
+    payment = get_object_or_404(Payment, id=payment_id)
     cart = Cart(request)
-    client = Client.objects.get(user=request.user)
-    payment = None 
-    if request.method == 'POST':
-        form = PaymentForm(request.POST)
-
-        if form.is_valid():
-            payment = form.save(commit=False)
-            payment.client = client
-            payment.amount = car.price
-            payment.transaction_id = str(uuid.uuid4())
-            payment.currency = 'EUR'
-            payment.status = 'Pending'
-            payment.car = car
-            payment.save()
-            messages.success(request, "Order placed successfully!")
-            return render(request, 'placing_order.html', {
-                'form': form,
-                'cart': cart,
-                'payment': payment
+    return render(request, 'pay_online.html', {
+        'cart': cart,
+        'payment': payment
     })
-    else:
-        form = PaymentForm()
-        return render(request, 'placing_order.html', {
-                'form': form,
-                'cart': cart,})
-
 
 
 def delete_order(request, car_id):
