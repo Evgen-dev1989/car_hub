@@ -2,7 +2,8 @@ from car.views import (Car_View, CarSearchView, car_detail,
                        cars_categories_page, cart_add, cart_clear, cart_delete,
                        send_order, cart_view, category_detail,
                        placing_order, reviews_add, user_register, delete_order, create_checkout_session,
-                       pay_online)
+                       pay_online, CategoryViewSet, ReviewViewSet,
+                       PaymentViewSet, ClientViewSet,CartModelViewSet)
 from client.views import all_clients, delete_all_users
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
@@ -14,6 +15,14 @@ from services import CarSitemap, CustomLoginView, LatestCarsFeed
 
 router = SimpleRouter()
 router.register('api/cars', Car_View, basename='car')
+router.register('api/payments', PaymentViewSet, basename='payment')
+router.register('api/categories', CategoryViewSet, basename='category')
+router.register('api/reviews', ReviewViewSet, basename='review')
+router.register('api/clients', ClientViewSet, basename='client')
+router.register('api/carts', CartModelViewSet, basename='cart_model')
+
+
+
 
 sitemaps = {
     'cars': CarSitemap,

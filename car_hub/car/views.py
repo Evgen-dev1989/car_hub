@@ -8,7 +8,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import uuid
 
 import stripe
-from api.serializers_car import CarSerializer
+from api.serializers_car import CarSerializer, CategorySerializer, ReviewSerializer, PaymentSerializer, ClientSerializer, CartModelSerializer
 from client.models import Client
 from config import email_host_user, stripe_secret_key
 from django.conf import settings
@@ -23,7 +23,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from services import (Cart, ClientForm, ReviewForm, get_subcategories_cargo,
                       get_subcategories_passenger)
 
-from .models import Car, Category, Payment, PaymentForm, Review
+from .models import Car, Category, Payment, PaymentForm, Review,  Cart_Model
 from .tasks import send_inform_text
 
 # django-admin makemessages -l ru
@@ -301,4 +301,28 @@ class Car_View(ModelViewSet):
     message = _("Hello")
     queryset = Car.objects.all()
     serializer_class = CarSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class CategoryViewSet(ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+class ReviewViewSet(ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class PaymentViewSet(ModelViewSet):
+    queryset = Payment.objects.all()
+    serializer_class = PaymentSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class ClientViewSet(ModelViewSet):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class CartModelViewSet(ModelViewSet):
+    queryset = Cart_Model.objects.all()
+    serializer_class = CartModelSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
