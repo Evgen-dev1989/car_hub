@@ -84,6 +84,9 @@ SECRET_KEY = 'django-insecure-0s)za4u!7f=0u2m#v#-t)o&++u5lst0are3z7xcy$iq_611^7f
 DEBUG = True
 
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['rest_framework.filters.SearchFilter'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]

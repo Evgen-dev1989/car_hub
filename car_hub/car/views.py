@@ -302,10 +302,12 @@ class Car_View(ModelViewSet):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+    search_fields = ['brand', 'model']
 
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    search_fields = ['name']
 
 class ReviewViewSet(ModelViewSet):
     queryset = Review.objects.all()
