@@ -7,7 +7,6 @@ from rest_framework.viewsets import ModelViewSet
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import uuid
 
-
 import stripe
 from api.serializers_car import CarSerializer
 from client.models import Client
@@ -20,11 +19,12 @@ from django.utils import translation
 from django.utils.translation import gettext as _
 from haystack.generic_views import SearchView
 from haystack.query import SearchQuerySet
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from services import (Cart, ClientForm, ReviewForm, get_subcategories_cargo,
                       get_subcategories_passenger)
-from .tasks import send_inform_text
 
-from .models import Car, Category, PaymentForm, Review, Payment
+from .models import Car, Category, Payment, PaymentForm, Review
+from .tasks import send_inform_text
 
 # django-admin makemessages -l ru
 # django-admin compilemessages
@@ -301,3 +301,4 @@ class Car_View(ModelViewSet):
     message = _("Hello")
     queryset = Car.objects.all()
     serializer_class = CarSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
