@@ -47,29 +47,58 @@ cd car_hub
 pip install -r [requirements.txt]
 
 3. Configure environment
-Copy .env.example to .env and set your environment variables (DB, Stripe keys, etc.)
+
+-Copy .env.example to .env and set your environment variables (DB, Stripe keys, etc.)
 Or set variables in car_hub/settings.py for quick start.
 
 4. Apply migrations
-python manage.py migrate
+
+ python manage.py migrate
 
 5. Create a superuser
-python manage.py createsuperuser
+
+ python manage.py createsuperuser
 
 6. Run Solr for Haystack search
-Download and extract Apache Solr.
+
+- Download and extract Apache Solr.
+
 Start Solr:
-bin/solr start --host 0.0.0.0 --port 8983 --user-managed
-bin/solr stop -p 8983
-bin/solr restart
+
+ bin/solr start --host 0.0.0.0 --port 8983 --user-managed
+ bin/solr stop -p 8983
+ bin/solr restart
 
 Create a core for your project
-bin/solr create -c carhub
-Make sure your settings.py Haystack config points to the correct Solr URL and core.
+
+  bin/solr create -c carhub
+  make sure your settings.py Haystack config points to the correct Solr URL and core.
 
 To reset and rebuild indexes, use the commands
-python manage.py clear_index --noinput
-python manage.py rebuild_index
+
+  python manage.py clear_index --noinput
+  python manage.py rebuild_index
+
+
+Social Authentication
+
+- The project supports authentication via social networks using [social-auth-app-django](https://github.com/python-social-auth/social-app-django).
+- Users can log in with Facebook, Twitter, Google, and GitHub.
+- To enable social authentication, configure the appropriate keys and secrets in your `settings.py`:
+
+    ```python
+    AUTHENTICATION_BACKENDS = (
+        'social_core.backends.github.GithubOAuth2',
+        'social_core.backends.google.GoogleOAuth2',
+        'social_core.backends.facebook.FacebookOAuth2',
+        'social_core.backends.twitter.TwitterOAuth',
+        'django.contrib.auth.backends.ModelBackend',
+    )
+    ```
+
+- Add your social app credentials (client ID and secret) for each provider.
+- After configuration, users will see "Login with Facebook", "Login with Twitter", "Login with Google", and "Login with GitHub" options on the login page.
+
 
 7. Run the development server
 python manage.py runserver
@@ -77,16 +106,17 @@ python manage.py runserver
 8. Start Celery worker
 celery -A car_hub worker -l info
 
-Usage
 Language Switcher:
-The site supports multiple languages. Use the language switcher in the UI to change the interface language.
+- The site supports multiple languages. Use the language switcher in the UI to change the interface language.
+
 Search:
-Use the search bar to find cars by keywords, powered by Haystack and Solr.
+- Use the search bar to find cars by keywords, powered by Haystack and Solr.
+
 API:
 Access the REST API at /api/ (see endpoints below).
 
 to add new translations use the command
- django-admin makemessages -l ru
+ django-admin makemessages -l ukr
  django-admin compilemessages
 
 API Endpoints
