@@ -16,7 +16,7 @@ Car Hub is a Django-based web application for car sales. It features a car catal
 - **Admin Panel**: Manage cars, categories, clients, payments, and reviews.
 - **REST API**: Full CRUD API for cars, categories, reviews, payments, clients, and cart.
 - **Internationalization**: Multilingual support (English, Russian, etc.) with language switcher.
-- **Full-text Search**: Integrated with Haystack and Solr for fast and flexible search.
+- **Full-text Search**: Integrated with Haystack and Solаr for fast and flexible search.
 - **RSS Feed & Sitemap**: For SEO and content syndication.
 
 ---
